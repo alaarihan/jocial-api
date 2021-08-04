@@ -9,6 +9,7 @@ import {
 } from 'graphql'
 import { GraphQLDateTime, GraphQLJSON } from 'graphql-scalars'
 import { Account } from '../types'
+import { LogType } from '../enums'
 
 export const Log = new GraphQLObjectType({
   name: 'Log',
@@ -18,6 +19,9 @@ export const Log = new GraphQLObjectType({
     },
     accountId: {
       type: GraphQLInt,
+    },
+    type: {
+      type: new GraphQLNonNull(LogType),
     },
     message: {
       type: new GraphQLNonNull(GraphQLString),
@@ -55,6 +59,7 @@ export const LogGroupByOutputType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLInt },
     accountId: { type: GraphQLInt },
+    type: { type: LogType },
     message: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
@@ -71,6 +76,7 @@ export const LogCountAggregateOutputType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLInt },
     accountId: { type: GraphQLInt },
+    type: { type: GraphQLInt },
     message: { type: GraphQLInt },
     createdAt: { type: GraphQLInt },
     updatedAt: { type: GraphQLInt },
@@ -99,6 +105,7 @@ export const LogMinAggregateOutputType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLInt },
     accountId: { type: GraphQLInt },
+    type: { type: LogType },
     message: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
@@ -110,6 +117,7 @@ export const LogMaxAggregateOutputType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLInt },
     accountId: { type: GraphQLInt },
+    type: { type: LogType },
     message: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },

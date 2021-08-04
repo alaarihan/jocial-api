@@ -31,6 +31,25 @@ export const PermissionType = new GraphQLEnumType({
   },
 })
 
+export const AccountStatus = new GraphQLEnumType({
+  name: 'AccountStatus',
+  values: {
+    OFFLINE: { value: 'OFFLINE' },
+    ONLINE: { value: 'ONLINE' },
+    DONE: { value: 'DONE' },
+    BLOCKED: { value: 'BLOCKED' },
+  },
+})
+
+export const LogType = new GraphQLEnumType({
+  name: 'LogType',
+  values: {
+    INFO: { value: 'INFO' },
+    WARNING: { value: 'WARNING' },
+    ERROR: { value: 'ERROR' },
+  },
+})
+
 export const PermissionScalarFieldEnum = new GraphQLEnumType({
   name: 'PermissionScalarFieldEnum',
   values: {
@@ -86,6 +105,9 @@ export const AccountScalarFieldEnum = new GraphQLEnumType({
     username: { value: 'username' },
     password: { value: 'password' },
     pin: { value: 'pin' },
+    lastActivity: { value: 'lastActivity' },
+    status: { value: 'status' },
+    statusDuration: { value: 'statusDuration' },
     createdAt: { value: 'createdAt' },
     updatedAt: { value: 'updatedAt' },
   },
@@ -96,6 +118,7 @@ export const LogScalarFieldEnum = new GraphQLEnumType({
   values: {
     id: { value: 'id' },
     accountId: { value: 'accountId' },
+    type: { value: 'type' },
     message: { value: 'message' },
     createdAt: { value: 'createdAt' },
     updatedAt: { value: 'updatedAt' },

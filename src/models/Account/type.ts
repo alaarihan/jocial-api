@@ -9,7 +9,7 @@ import {
 } from 'graphql'
 import { GraphQLDateTime, GraphQLJSON } from 'graphql-scalars'
 import { User, Log } from '../types'
-import { LogScalarFieldEnum } from '../enums'
+import { AccountStatus, LogScalarFieldEnum } from '../enums'
 import { LogOrderByInput, LogWhereInput, LogWhereUniqueInput } from '../inputs'
 
 export const Account = new GraphQLObjectType({
@@ -37,6 +37,15 @@ export const Account = new GraphQLObjectType({
       type: new GraphQLNonNull(GraphQLString),
     },
     pin: {
+      type: new GraphQLNonNull(GraphQLInt),
+    },
+    lastActivity: {
+      type: new GraphQLNonNull(GraphQLDateTime),
+    },
+    status: {
+      type: new GraphQLNonNull(AccountStatus),
+    },
+    statusDuration: {
       type: new GraphQLNonNull(GraphQLInt),
     },
     createdAt: {
@@ -91,6 +100,9 @@ export const AccountGroupByOutputType = new GraphQLObjectType({
     username: { type: GraphQLString },
     password: { type: GraphQLString },
     pin: { type: GraphQLInt },
+    lastActivity: { type: GraphQLDateTime },
+    status: { type: AccountStatus },
+    statusDuration: { type: GraphQLInt },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     _count: { type: AccountCountAggregateOutputType },
@@ -112,6 +124,9 @@ export const AccountCountAggregateOutputType = new GraphQLObjectType({
     username: { type: GraphQLInt },
     password: { type: GraphQLInt },
     pin: { type: GraphQLInt },
+    lastActivity: { type: GraphQLInt },
+    status: { type: GraphQLInt },
+    statusDuration: { type: GraphQLInt },
     createdAt: { type: GraphQLInt },
     updatedAt: { type: GraphQLInt },
     _all: { type: GraphQLInt },
@@ -124,6 +139,7 @@ export const AccountAvgAggregateOutputType = new GraphQLObjectType({
     id: { type: GraphQLFloat },
     ownerId: { type: GraphQLFloat },
     pin: { type: GraphQLFloat },
+    statusDuration: { type: GraphQLFloat },
   }),
 })
 
@@ -133,6 +149,7 @@ export const AccountSumAggregateOutputType = new GraphQLObjectType({
     id: { type: GraphQLInt },
     ownerId: { type: GraphQLInt },
     pin: { type: GraphQLInt },
+    statusDuration: { type: GraphQLInt },
   }),
 })
 
@@ -147,6 +164,9 @@ export const AccountMinAggregateOutputType = new GraphQLObjectType({
     username: { type: GraphQLString },
     password: { type: GraphQLString },
     pin: { type: GraphQLInt },
+    lastActivity: { type: GraphQLDateTime },
+    status: { type: AccountStatus },
+    statusDuration: { type: GraphQLInt },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
   }),
@@ -163,6 +183,9 @@ export const AccountMaxAggregateOutputType = new GraphQLObjectType({
     username: { type: GraphQLString },
     password: { type: GraphQLString },
     pin: { type: GraphQLInt },
+    lastActivity: { type: GraphQLDateTime },
+    status: { type: AccountStatus },
+    statusDuration: { type: GraphQLInt },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
   }),

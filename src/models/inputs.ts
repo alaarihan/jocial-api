@@ -12,6 +12,8 @@ import { GraphQLDateTime, GraphQLJSON } from 'graphql-scalars'
 import {
   UserRole,
   PermissionType,
+  AccountStatus,
+  LogType,
   PermissionScalarFieldEnum,
   FileScalarFieldEnum,
   UserScalarFieldEnum,
@@ -262,6 +264,9 @@ export const AccountWhereInput = new GraphQLInputObjectType({
     username: { type: StringFilter },
     password: { type: StringFilter },
     pin: { type: IntFilter },
+    lastActivity: { type: DateTimeFilter },
+    status: { type: EnumAccountStatusFilter },
+    statusDuration: { type: IntFilter },
     createdAt: { type: DateTimeFilter },
     updatedAt: { type: DateTimeFilter },
     owner: { type: UserWhereInput },
@@ -280,6 +285,9 @@ export const AccountOrderByInput = new GraphQLInputObjectType({
     username: { type: SortOrder },
     password: { type: SortOrder },
     pin: { type: SortOrder },
+    lastActivity: { type: SortOrder },
+    status: { type: SortOrder },
+    statusDuration: { type: SortOrder },
     createdAt: { type: SortOrder },
     updatedAt: { type: SortOrder },
   }),
@@ -319,6 +327,9 @@ export const AccountScalarWhereWithAggregatesInput = new GraphQLInputObjectType(
       username: { type: StringWithAggregatesFilter },
       password: { type: StringWithAggregatesFilter },
       pin: { type: IntWithAggregatesFilter },
+      lastActivity: { type: DateTimeWithAggregatesFilter },
+      status: { type: EnumAccountStatusWithAggregatesFilter },
+      statusDuration: { type: IntWithAggregatesFilter },
       createdAt: { type: DateTimeWithAggregatesFilter },
       updatedAt: { type: DateTimeWithAggregatesFilter },
     }),
@@ -333,6 +344,7 @@ export const LogWhereInput = new GraphQLInputObjectType({
     NOT: { type: new GraphQLList(new GraphQLNonNull(LogWhereInput)) },
     id: { type: IntFilter },
     accountId: { type: IntNullableFilter },
+    type: { type: EnumLogTypeFilter },
     message: { type: StringFilter },
     createdAt: { type: DateTimeFilter },
     updatedAt: { type: DateTimeFilter },
@@ -345,6 +357,7 @@ export const LogOrderByInput = new GraphQLInputObjectType({
   fields: () => ({
     id: { type: SortOrder },
     accountId: { type: SortOrder },
+    type: { type: SortOrder },
     message: { type: SortOrder },
     createdAt: { type: SortOrder },
     updatedAt: { type: SortOrder },
@@ -378,6 +391,7 @@ export const LogScalarWhereWithAggregatesInput = new GraphQLInputObjectType({
     },
     id: { type: IntWithAggregatesFilter },
     accountId: { type: IntNullableWithAggregatesFilter },
+    type: { type: EnumLogTypeWithAggregatesFilter },
     message: { type: StringWithAggregatesFilter },
     createdAt: { type: DateTimeWithAggregatesFilter },
     updatedAt: { type: DateTimeWithAggregatesFilter },
@@ -696,6 +710,9 @@ export const AccountCreateInput = new GraphQLInputObjectType({
     username: { type: new GraphQLNonNull(GraphQLString) },
     password: { type: new GraphQLNonNull(GraphQLString) },
     pin: { type: new GraphQLNonNull(GraphQLInt) },
+    lastActivity: { type: GraphQLDateTime },
+    status: { type: AccountStatus },
+    statusDuration: { type: GraphQLInt },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     owner: {
@@ -716,6 +733,9 @@ export const AccountUncheckedCreateInput = new GraphQLInputObjectType({
     username: { type: new GraphQLNonNull(GraphQLString) },
     password: { type: new GraphQLNonNull(GraphQLString) },
     pin: { type: new GraphQLNonNull(GraphQLInt) },
+    lastActivity: { type: GraphQLDateTime },
+    status: { type: AccountStatus },
+    statusDuration: { type: GraphQLInt },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     logs: { type: LogUncheckedCreateNestedManyWithoutAccountInput },
@@ -731,6 +751,9 @@ export const AccountUpdateInput = new GraphQLInputObjectType({
     username: { type: GraphQLString },
     password: { type: GraphQLString },
     pin: { type: GraphQLInt },
+    lastActivity: { type: GraphQLDateTime },
+    status: { type: AccountStatus },
+    statusDuration: { type: GraphQLInt },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     owner: { type: UserUpdateOneRequiredWithoutAccountsInput },
@@ -749,6 +772,9 @@ export const AccountUncheckedUpdateInput = new GraphQLInputObjectType({
     username: { type: GraphQLString },
     password: { type: GraphQLString },
     pin: { type: GraphQLInt },
+    lastActivity: { type: GraphQLDateTime },
+    status: { type: AccountStatus },
+    statusDuration: { type: GraphQLInt },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     logs: { type: LogUncheckedUpdateManyWithoutAccountInput },
@@ -766,6 +792,9 @@ export const AccountCreateManyInput = new GraphQLInputObjectType({
     username: { type: new GraphQLNonNull(GraphQLString) },
     password: { type: new GraphQLNonNull(GraphQLString) },
     pin: { type: new GraphQLNonNull(GraphQLInt) },
+    lastActivity: { type: GraphQLDateTime },
+    status: { type: AccountStatus },
+    statusDuration: { type: GraphQLInt },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
   }),
@@ -780,6 +809,9 @@ export const AccountUpdateManyMutationInput = new GraphQLInputObjectType({
     username: { type: GraphQLString },
     password: { type: GraphQLString },
     pin: { type: GraphQLInt },
+    lastActivity: { type: GraphQLDateTime },
+    status: { type: AccountStatus },
+    statusDuration: { type: GraphQLInt },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
   }),
@@ -796,6 +828,9 @@ export const AccountUncheckedUpdateManyInput = new GraphQLInputObjectType({
     username: { type: GraphQLString },
     password: { type: GraphQLString },
     pin: { type: GraphQLInt },
+    lastActivity: { type: GraphQLDateTime },
+    status: { type: AccountStatus },
+    statusDuration: { type: GraphQLInt },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
   }),
@@ -804,6 +839,7 @@ export const AccountUncheckedUpdateManyInput = new GraphQLInputObjectType({
 export const LogCreateInput = new GraphQLInputObjectType({
   name: 'LogCreateInput',
   fields: () => ({
+    type: { type: LogType },
     message: { type: new GraphQLNonNull(GraphQLString) },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
@@ -816,6 +852,7 @@ export const LogUncheckedCreateInput = new GraphQLInputObjectType({
   fields: () => ({
     id: { type: GraphQLInt },
     accountId: { type: GraphQLInt },
+    type: { type: LogType },
     message: { type: new GraphQLNonNull(GraphQLString) },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
@@ -825,6 +862,7 @@ export const LogUncheckedCreateInput = new GraphQLInputObjectType({
 export const LogUpdateInput = new GraphQLInputObjectType({
   name: 'LogUpdateInput',
   fields: () => ({
+    type: { type: LogType },
     message: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
@@ -837,6 +875,7 @@ export const LogUncheckedUpdateInput = new GraphQLInputObjectType({
   fields: () => ({
     id: { type: GraphQLInt },
     accountId: { type: GraphQLInt },
+    type: { type: LogType },
     message: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
@@ -848,6 +887,7 @@ export const LogCreateManyInput = new GraphQLInputObjectType({
   fields: () => ({
     id: { type: GraphQLInt },
     accountId: { type: GraphQLInt },
+    type: { type: LogType },
     message: { type: new GraphQLNonNull(GraphQLString) },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
@@ -857,6 +897,7 @@ export const LogCreateManyInput = new GraphQLInputObjectType({
 export const LogUpdateManyMutationInput = new GraphQLInputObjectType({
   name: 'LogUpdateManyMutationInput',
   fields: () => ({
+    type: { type: LogType },
     message: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
@@ -868,6 +909,7 @@ export const LogUncheckedUpdateManyInput = new GraphQLInputObjectType({
   fields: () => ({
     id: { type: GraphQLInt },
     accountId: { type: GraphQLInt },
+    type: { type: LogType },
     message: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
@@ -1199,6 +1241,16 @@ export const DateTimeNullableWithAggregatesFilter = new GraphQLInputObjectType({
   }),
 })
 
+export const EnumAccountStatusFilter = new GraphQLInputObjectType({
+  name: 'EnumAccountStatusFilter',
+  fields: () => ({
+    equals: { type: AccountStatus },
+    in: { type: new GraphQLList(new GraphQLNonNull(AccountStatus)) },
+    notIn: { type: new GraphQLList(new GraphQLNonNull(AccountStatus)) },
+    not: { type: NestedEnumAccountStatusFilter },
+  }),
+})
+
 export const UserRelationFilter = new GraphQLInputObjectType({
   name: 'UserRelationFilter',
   fields: () => ({
@@ -1216,6 +1268,24 @@ export const LogListRelationFilter = new GraphQLInputObjectType({
   }),
 })
 
+export const EnumAccountStatusWithAggregatesFilter = new GraphQLInputObjectType(
+  {
+    name: 'EnumAccountStatusWithAggregatesFilter',
+    fields: () => ({
+      equals: { type: AccountStatus },
+      in: { type: new GraphQLList(new GraphQLNonNull(AccountStatus)) },
+      notIn: { type: new GraphQLList(new GraphQLNonNull(AccountStatus)) },
+      not: { type: NestedEnumAccountStatusWithAggregatesFilter },
+      _count: { type: NestedIntFilter },
+      count: { type: NestedIntFilter },
+      _min: { type: NestedEnumAccountStatusFilter },
+      min: { type: NestedEnumAccountStatusFilter },
+      _max: { type: NestedEnumAccountStatusFilter },
+      max: { type: NestedEnumAccountStatusFilter },
+    }),
+  },
+)
+
 export const IntNullableFilter = new GraphQLInputObjectType({
   name: 'IntNullableFilter',
   fields: () => ({
@@ -1227,6 +1297,16 @@ export const IntNullableFilter = new GraphQLInputObjectType({
     gt: { type: GraphQLInt },
     gte: { type: GraphQLInt },
     not: { type: NestedIntNullableFilter },
+  }),
+})
+
+export const EnumLogTypeFilter = new GraphQLInputObjectType({
+  name: 'EnumLogTypeFilter',
+  fields: () => ({
+    equals: { type: LogType },
+    in: { type: new GraphQLList(new GraphQLNonNull(LogType)) },
+    notIn: { type: new GraphQLList(new GraphQLNonNull(LogType)) },
+    not: { type: NestedEnumLogTypeFilter },
   }),
 })
 
@@ -1259,6 +1339,22 @@ export const IntNullableWithAggregatesFilter = new GraphQLInputObjectType({
     min: { type: NestedIntNullableFilter },
     _max: { type: NestedIntNullableFilter },
     max: { type: NestedIntNullableFilter },
+  }),
+})
+
+export const EnumLogTypeWithAggregatesFilter = new GraphQLInputObjectType({
+  name: 'EnumLogTypeWithAggregatesFilter',
+  fields: () => ({
+    equals: { type: LogType },
+    in: { type: new GraphQLList(new GraphQLNonNull(LogType)) },
+    notIn: { type: new GraphQLList(new GraphQLNonNull(LogType)) },
+    not: { type: NestedEnumLogTypeWithAggregatesFilter },
+    _count: { type: NestedIntFilter },
+    count: { type: NestedIntFilter },
+    _min: { type: NestedEnumLogTypeFilter },
+    min: { type: NestedEnumLogTypeFilter },
+    _max: { type: NestedEnumLogTypeFilter },
+    max: { type: NestedEnumLogTypeFilter },
   }),
 })
 
@@ -1537,6 +1633,14 @@ export const LogUncheckedCreateNestedManyWithoutAccountInput =
     }),
   })
 
+export const EnumAccountStatusFieldUpdateOperationsInput =
+  new GraphQLInputObjectType({
+    name: 'EnumAccountStatusFieldUpdateOperationsInput',
+    fields: () => ({
+      set: { type: AccountStatus },
+    }),
+  })
+
 export const UserUpdateOneRequiredWithoutAccountsInput =
   new GraphQLInputObjectType({
     name: 'UserUpdateOneRequiredWithoutAccountsInput',
@@ -1641,6 +1745,15 @@ export const AccountCreateNestedOneWithoutLogsInput =
       connect: { type: AccountWhereUniqueInput },
     }),
   })
+
+export const EnumLogTypeFieldUpdateOperationsInput = new GraphQLInputObjectType(
+  {
+    name: 'EnumLogTypeFieldUpdateOperationsInput',
+    fields: () => ({
+      set: { type: LogType },
+    }),
+  },
+)
 
 export const AccountUpdateOneWithoutLogsInput = new GraphQLInputObjectType({
   name: 'AccountUpdateOneWithoutLogsInput',
@@ -1968,6 +2081,43 @@ export const NestedDateTimeNullableWithAggregatesFilter =
     }),
   })
 
+export const NestedEnumAccountStatusFilter = new GraphQLInputObjectType({
+  name: 'NestedEnumAccountStatusFilter',
+  fields: () => ({
+    equals: { type: AccountStatus },
+    in: { type: new GraphQLList(new GraphQLNonNull(AccountStatus)) },
+    notIn: { type: new GraphQLList(new GraphQLNonNull(AccountStatus)) },
+    not: { type: NestedEnumAccountStatusFilter },
+  }),
+})
+
+export const NestedEnumAccountStatusWithAggregatesFilter =
+  new GraphQLInputObjectType({
+    name: 'NestedEnumAccountStatusWithAggregatesFilter',
+    fields: () => ({
+      equals: { type: AccountStatus },
+      in: { type: new GraphQLList(new GraphQLNonNull(AccountStatus)) },
+      notIn: { type: new GraphQLList(new GraphQLNonNull(AccountStatus)) },
+      not: { type: NestedEnumAccountStatusWithAggregatesFilter },
+      _count: { type: NestedIntFilter },
+      count: { type: NestedIntFilter },
+      _min: { type: NestedEnumAccountStatusFilter },
+      min: { type: NestedEnumAccountStatusFilter },
+      _max: { type: NestedEnumAccountStatusFilter },
+      max: { type: NestedEnumAccountStatusFilter },
+    }),
+  })
+
+export const NestedEnumLogTypeFilter = new GraphQLInputObjectType({
+  name: 'NestedEnumLogTypeFilter',
+  fields: () => ({
+    equals: { type: LogType },
+    in: { type: new GraphQLList(new GraphQLNonNull(LogType)) },
+    notIn: { type: new GraphQLList(new GraphQLNonNull(LogType)) },
+    not: { type: NestedEnumLogTypeFilter },
+  }),
+})
+
 export const NestedIntNullableWithAggregatesFilter = new GraphQLInputObjectType(
   {
     name: 'NestedIntNullableWithAggregatesFilter',
@@ -2008,6 +2158,24 @@ export const NestedFloatNullableFilter = new GraphQLInputObjectType({
   }),
 })
 
+export const NestedEnumLogTypeWithAggregatesFilter = new GraphQLInputObjectType(
+  {
+    name: 'NestedEnumLogTypeWithAggregatesFilter',
+    fields: () => ({
+      equals: { type: LogType },
+      in: { type: new GraphQLList(new GraphQLNonNull(LogType)) },
+      notIn: { type: new GraphQLList(new GraphQLNonNull(LogType)) },
+      not: { type: NestedEnumLogTypeWithAggregatesFilter },
+      _count: { type: NestedIntFilter },
+      count: { type: NestedIntFilter },
+      _min: { type: NestedEnumLogTypeFilter },
+      min: { type: NestedEnumLogTypeFilter },
+      _max: { type: NestedEnumLogTypeFilter },
+      max: { type: NestedEnumLogTypeFilter },
+    }),
+  },
+)
+
 export const AccountCreateWithoutOwnerInput = new GraphQLInputObjectType({
   name: 'AccountCreateWithoutOwnerInput',
   fields: () => ({
@@ -2017,6 +2185,9 @@ export const AccountCreateWithoutOwnerInput = new GraphQLInputObjectType({
     username: { type: new GraphQLNonNull(GraphQLString) },
     password: { type: new GraphQLNonNull(GraphQLString) },
     pin: { type: new GraphQLNonNull(GraphQLInt) },
+    lastActivity: { type: GraphQLDateTime },
+    status: { type: AccountStatus },
+    statusDuration: { type: GraphQLInt },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     logs: { type: LogCreateNestedManyWithoutAccountInput },
@@ -2034,6 +2205,9 @@ export const AccountUncheckedCreateWithoutOwnerInput =
       username: { type: new GraphQLNonNull(GraphQLString) },
       password: { type: new GraphQLNonNull(GraphQLString) },
       pin: { type: new GraphQLNonNull(GraphQLInt) },
+      lastActivity: { type: GraphQLDateTime },
+      status: { type: AccountStatus },
+      statusDuration: { type: GraphQLInt },
       createdAt: { type: GraphQLDateTime },
       updatedAt: { type: GraphQLDateTime },
       logs: { type: LogUncheckedCreateNestedManyWithoutAccountInput },
@@ -2115,6 +2289,9 @@ export const AccountScalarWhereInput = new GraphQLInputObjectType({
     username: { type: StringFilter },
     password: { type: StringFilter },
     pin: { type: IntFilter },
+    lastActivity: { type: DateTimeFilter },
+    status: { type: EnumAccountStatusFilter },
+    statusDuration: { type: IntFilter },
     createdAt: { type: DateTimeFilter },
     updatedAt: { type: DateTimeFilter },
   }),
@@ -2168,6 +2345,7 @@ export const UserCreateOrConnectWithoutAccountsInput =
 export const LogCreateWithoutAccountInput = new GraphQLInputObjectType({
   name: 'LogCreateWithoutAccountInput',
   fields: () => ({
+    type: { type: LogType },
     message: { type: new GraphQLNonNull(GraphQLString) },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
@@ -2179,6 +2357,7 @@ export const LogUncheckedCreateWithoutAccountInput = new GraphQLInputObjectType(
     name: 'LogUncheckedCreateWithoutAccountInput',
     fields: () => ({
       id: { type: GraphQLInt },
+      type: { type: LogType },
       message: { type: new GraphQLNonNull(GraphQLString) },
       createdAt: { type: GraphQLDateTime },
       updatedAt: { type: GraphQLDateTime },
@@ -2298,6 +2477,7 @@ export const LogScalarWhereInput = new GraphQLInputObjectType({
     NOT: { type: new GraphQLList(new GraphQLNonNull(LogScalarWhereInput)) },
     id: { type: IntFilter },
     accountId: { type: IntNullableFilter },
+    type: { type: EnumLogTypeFilter },
     message: { type: StringFilter },
     createdAt: { type: DateTimeFilter },
     updatedAt: { type: DateTimeFilter },
@@ -2313,6 +2493,9 @@ export const AccountCreateWithoutLogsInput = new GraphQLInputObjectType({
     username: { type: new GraphQLNonNull(GraphQLString) },
     password: { type: new GraphQLNonNull(GraphQLString) },
     pin: { type: new GraphQLNonNull(GraphQLInt) },
+    lastActivity: { type: GraphQLDateTime },
+    status: { type: AccountStatus },
+    statusDuration: { type: GraphQLInt },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     owner: {
@@ -2333,6 +2516,9 @@ export const AccountUncheckedCreateWithoutLogsInput =
       username: { type: new GraphQLNonNull(GraphQLString) },
       password: { type: new GraphQLNonNull(GraphQLString) },
       pin: { type: new GraphQLNonNull(GraphQLInt) },
+      lastActivity: { type: GraphQLDateTime },
+      status: { type: AccountStatus },
+      statusDuration: { type: GraphQLInt },
       createdAt: { type: GraphQLDateTime },
       updatedAt: { type: GraphQLDateTime },
     }),
@@ -2370,6 +2556,9 @@ export const AccountUpdateWithoutLogsInput = new GraphQLInputObjectType({
     username: { type: GraphQLString },
     password: { type: GraphQLString },
     pin: { type: GraphQLInt },
+    lastActivity: { type: GraphQLDateTime },
+    status: { type: AccountStatus },
+    statusDuration: { type: GraphQLInt },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     owner: { type: UserUpdateOneRequiredWithoutAccountsInput },
@@ -2388,6 +2577,9 @@ export const AccountUncheckedUpdateWithoutLogsInput =
       username: { type: GraphQLString },
       password: { type: GraphQLString },
       pin: { type: GraphQLInt },
+      lastActivity: { type: GraphQLDateTime },
+      status: { type: AccountStatus },
+      statusDuration: { type: GraphQLInt },
       createdAt: { type: GraphQLDateTime },
       updatedAt: { type: GraphQLDateTime },
     }),
@@ -2403,6 +2595,9 @@ export const AccountCreateManyOwnerInput = new GraphQLInputObjectType({
     username: { type: new GraphQLNonNull(GraphQLString) },
     password: { type: new GraphQLNonNull(GraphQLString) },
     pin: { type: new GraphQLNonNull(GraphQLInt) },
+    lastActivity: { type: GraphQLDateTime },
+    status: { type: AccountStatus },
+    statusDuration: { type: GraphQLInt },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
   }),
@@ -2417,6 +2612,9 @@ export const AccountUpdateWithoutOwnerInput = new GraphQLInputObjectType({
     username: { type: GraphQLString },
     password: { type: GraphQLString },
     pin: { type: GraphQLInt },
+    lastActivity: { type: GraphQLDateTime },
+    status: { type: AccountStatus },
+    statusDuration: { type: GraphQLInt },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     logs: { type: LogUpdateManyWithoutAccountInput },
@@ -2434,6 +2632,9 @@ export const AccountUncheckedUpdateWithoutOwnerInput =
       username: { type: GraphQLString },
       password: { type: GraphQLString },
       pin: { type: GraphQLInt },
+      lastActivity: { type: GraphQLDateTime },
+      status: { type: AccountStatus },
+      statusDuration: { type: GraphQLInt },
       createdAt: { type: GraphQLDateTime },
       updatedAt: { type: GraphQLDateTime },
       logs: { type: LogUncheckedUpdateManyWithoutAccountInput },
@@ -2451,6 +2652,9 @@ export const AccountUncheckedUpdateManyWithoutAccountsInput =
       username: { type: GraphQLString },
       password: { type: GraphQLString },
       pin: { type: GraphQLInt },
+      lastActivity: { type: GraphQLDateTime },
+      status: { type: AccountStatus },
+      statusDuration: { type: GraphQLInt },
       createdAt: { type: GraphQLDateTime },
       updatedAt: { type: GraphQLDateTime },
     }),
@@ -2460,6 +2664,7 @@ export const LogCreateManyAccountInput = new GraphQLInputObjectType({
   name: 'LogCreateManyAccountInput',
   fields: () => ({
     id: { type: GraphQLInt },
+    type: { type: LogType },
     message: { type: new GraphQLNonNull(GraphQLString) },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
@@ -2469,6 +2674,7 @@ export const LogCreateManyAccountInput = new GraphQLInputObjectType({
 export const LogUpdateWithoutAccountInput = new GraphQLInputObjectType({
   name: 'LogUpdateWithoutAccountInput',
   fields: () => ({
+    type: { type: LogType },
     message: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
@@ -2480,6 +2686,7 @@ export const LogUncheckedUpdateWithoutAccountInput = new GraphQLInputObjectType(
     name: 'LogUncheckedUpdateWithoutAccountInput',
     fields: () => ({
       id: { type: GraphQLInt },
+      type: { type: LogType },
       message: { type: GraphQLString },
       createdAt: { type: GraphQLDateTime },
       updatedAt: { type: GraphQLDateTime },
@@ -2492,6 +2699,7 @@ export const LogUncheckedUpdateManyWithoutLogsInput =
     name: 'LogUncheckedUpdateManyWithoutLogsInput',
     fields: () => ({
       id: { type: GraphQLInt },
+      type: { type: LogType },
       message: { type: GraphQLString },
       createdAt: { type: GraphQLDateTime },
       updatedAt: { type: GraphQLDateTime },

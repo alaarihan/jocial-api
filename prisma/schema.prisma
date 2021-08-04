@@ -64,25 +64,42 @@ model User {
 }
 
 model Account {
-  id        Int      @id @default(autoincrement())
-  ownerId   Int
-  name      String?
-  email     String?
-  phone     String
-  username  String   @db.VarChar(255)
-  password  String
-  pin       Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  owner     User     @relation(fields: [ownerId], references: [id])
-  logs      Log[]
+  id             Int           @id @default(autoincrement())
+  ownerId        Int
+  name           String?
+  email          String?
+  phone          String
+  username       String        @db.VarChar(255)
+  password       String
+  pin            Int
+  lastActivity   DateTime      @default("2021-08-04T02:45:51.186Z")
+  status         AccountStatus @default(OFFLINE)
+  statusDuration Int           @default(0)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  owner          User          @relation(fields: [ownerId], references: [id])
+  logs           Log[]
 }
 
 model Log {
   id        Int      @id @default(autoincrement())
   accountId Int?
+  type      LogType  @default(INFO)
   message   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   account   Account? @relation(fields: [accountId], references: [id])
+}
+
+enum LogType {
+  INFO
+  WARNING
+  ERROR
+}
+
+enum AccountStatus {
+  OFFLINE
+  ONLINE
+  DONE
+  BLOCKED
 }
