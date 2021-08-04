@@ -12,12 +12,14 @@ import { getRolePerms } from './auth'
 module.exports = function (fastify, opts, done) {
   fastify.post('/file', async (req, reply) => {
     // before_upload_checks
-const user = await getUserFromRequest(req, reply)
-const perms = (await getRolePerms(user.role)) || []
-const fileCreatePerm = perms.find(item => item.model === 'File' && item.type === 'CREATE')
-if(!fileCreatePerm)  throw reply.code(401).type('text/plain').send('permission denied!')
-// upload_permission_check_end
-
+    const user = await getUserFromRequest(req, reply)
+    const perms = (await getRolePerms(user.role)) || []
+    const fileCreatePerm = perms.find(
+      (item) => item.model === 'File' && item.type === 'CREATE',
+    )
+    if (!fileCreatePerm)
+      throw reply.code(401).type('text/plain').send('permission denied!')
+    // upload_permission_check_end
 
     const data = await req.file()
     if (!data || !data.file) throw new Error('No file to upload')

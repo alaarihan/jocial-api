@@ -38,11 +38,11 @@ export const subscribeFunction = withFilter(
       if (!count) return false
     }
     // add_more_checkes
-if (ctx.user?.role !== 'ROOT') {
-  const item = { id: payload.id }
-  const itemExists = await checkModelItemsExist(item, ctx, ext, false)
-  return itemExists
-}
+    if (ctx.user?.role !== 'ROOT') {
+      const item = { id: payload.id }
+      const itemExists = await checkModelItemsExist(item, ctx, ext, false)
+      return itemExists
+    }
     return true
   },
 )

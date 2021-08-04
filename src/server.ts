@@ -12,8 +12,7 @@ const schemaWithMiddlewares = applyMiddleware(
   prismaSelect,
   subscriptionsMiddleware,
   // add_middlewares
-acl,
-
+  acl,
 )
 const app = fastify()
 
@@ -40,7 +39,7 @@ async function start() {
     validationRules: [NoIntrospection],
   })
 
-app.register(require('./auth/src/routes'))
+  app.register(require('./auth/src/routes'))
 
   await app.ready()
   app.graphql.addHook(
@@ -48,7 +47,10 @@ app.register(require('./auth/src/routes'))
     async function (_schema, _source, ctx: AppContext) {
       try {
         if (ctx.user?.role !== 'ROOT') {
-          const roleSchema = await getRoleSchemaCache(schemaWithMiddlewares, ctx.user.role)
+          const roleSchema = await getRoleSchemaCache(
+            schemaWithMiddlewares,
+            ctx.user.role,
+          )
           ctx.app.graphql.replaceSchema(roleSchema)
         } else {
           ctx.app.graphql.replaceSchema(schemaWithMiddlewares)
@@ -58,7 +60,6 @@ app.register(require('./auth/src/routes'))
       }
     },
   )
-
 
   app
     .listen(3000)

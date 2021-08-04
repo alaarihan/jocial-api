@@ -21,7 +21,7 @@ export const schema = new GraphQLSchema({
     name: 'Query',
     fields: {
       // merge_the_query_fields_here
- ...authQueries,
+      ...authQueries,
       ...logQueries,
       ...accountQueries,
       ...userQueries,
@@ -33,7 +33,7 @@ export const schema = new GraphQLSchema({
     name: 'Mutation',
     fields: {
       // merge_the_mutation_fields_here
- ...authMutations,
+      ...authMutations,
       ...logMutations,
       ...accountMutations,
       ...userMutations,
