@@ -6,6 +6,7 @@ import {
   FileOrderByInput,
 } from '../inputs'
 import { FileScalarFieldEnum } from '../enums'
+import { AppContext } from '../../context'
 export const fileQueries = {
   findUniqueFile: {
     extensions: {
@@ -17,8 +18,8 @@ export const fileQueries = {
     args: {
       where: { type: new GraphQLNonNull(FileWhereUniqueInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.file.findUnique(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.file.findUnique(args)
     },
   },
   findFirstFile: {
@@ -36,8 +37,8 @@ export const fileQueries = {
       take: { type: GraphQLInt },
       distinct: { type: new GraphQLList(FileScalarFieldEnum) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.file.findFirst(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.file.findFirst(args)
     },
   },
   findManyFile: {
@@ -55,8 +56,8 @@ export const fileQueries = {
       take: { type: GraphQLInt },
       distinct: { type: new GraphQLList(FileScalarFieldEnum) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.file.findMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.file.findMany(args)
     },
   },
   countFile: {
@@ -74,8 +75,8 @@ export const fileQueries = {
       take: { type: GraphQLInt },
       distinct: { type: new GraphQLList(FileScalarFieldEnum) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.file.count(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.file.count(args)
     },
   },
   aggregateFile: {
@@ -92,8 +93,8 @@ export const fileQueries = {
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.file.aggregate(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.file.aggregate(args)
     },
   },
 }

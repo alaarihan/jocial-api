@@ -9,7 +9,7 @@ import {
   PermissionUpdateManyMutationInput,
   PermissionCreateManyInput,
 } from '../inputs'
-
+import { AppContext } from '../../context'
 export const permissionMutations = {
   createOnePermission: {
     extensions: {
@@ -21,8 +21,8 @@ export const permissionMutations = {
     args: {
       data: { type: new GraphQLNonNull(PermissionCreateInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.permission.create(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.permission.create(args)
     },
   },
   updateOnePermission: {
@@ -36,8 +36,8 @@ export const permissionMutations = {
       where: { type: new GraphQLNonNull(PermissionWhereUniqueInput) },
       data: { type: new GraphQLNonNull(PermissionUpdateInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.permission.update(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.permission.update(args)
     },
   },
   deleteOnePermission: {
@@ -50,8 +50,8 @@ export const permissionMutations = {
     args: {
       where: { type: new GraphQLNonNull(PermissionWhereUniqueInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.permission.delete(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.permission.delete(args)
     },
   },
   upsertOnePermission: {
@@ -66,8 +66,8 @@ export const permissionMutations = {
       create: { type: new GraphQLNonNull(PermissionCreateInput) },
       update: { type: new GraphQLNonNull(PermissionUpdateInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.permission.upsert(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.permission.upsert(args)
     },
   },
   createManyPermission: {
@@ -85,8 +85,8 @@ export const permissionMutations = {
       },
       skipDuplicates: { type: GraphQLBoolean },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.permission.createMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.permission.createMany(args)
     },
   },
   updateManyPermission: {
@@ -100,8 +100,8 @@ export const permissionMutations = {
       where: { type: new GraphQLNonNull(PermissionWhereInput) },
       data: { type: new GraphQLNonNull(PermissionUpdateManyMutationInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.permission.updateMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.permission.updateMany(args)
     },
   },
   deleteManyPermission: {
@@ -114,8 +114,8 @@ export const permissionMutations = {
     args: {
       where: { type: new GraphQLNonNull(PermissionWhereInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.permission.deleteMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.permission.deleteMany(args)
     },
   },
 }

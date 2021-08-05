@@ -6,6 +6,7 @@ import {
   UserOrderByInput,
 } from '../inputs'
 import { UserScalarFieldEnum } from '../enums'
+import { AppContext } from '../../context'
 export const userQueries = {
   findUniqueUser: {
     extensions: {
@@ -17,8 +18,8 @@ export const userQueries = {
     args: {
       where: { type: new GraphQLNonNull(UserWhereUniqueInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.user.findUnique(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.user.findUnique(args)
     },
   },
   findFirstUser: {
@@ -36,8 +37,8 @@ export const userQueries = {
       take: { type: GraphQLInt },
       distinct: { type: new GraphQLList(UserScalarFieldEnum) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.user.findFirst(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.user.findFirst(args)
     },
   },
   findManyUser: {
@@ -55,8 +56,8 @@ export const userQueries = {
       take: { type: GraphQLInt },
       distinct: { type: new GraphQLList(UserScalarFieldEnum) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.user.findMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.user.findMany(args)
     },
   },
   countUser: {
@@ -74,8 +75,8 @@ export const userQueries = {
       take: { type: GraphQLInt },
       distinct: { type: new GraphQLList(UserScalarFieldEnum) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.user.count(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.user.count(args)
     },
   },
   aggregateUser: {
@@ -92,8 +93,8 @@ export const userQueries = {
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.user.aggregate(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.user.aggregate(args)
     },
   },
 }

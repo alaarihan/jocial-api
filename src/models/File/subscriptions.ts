@@ -3,6 +3,7 @@ import { File } from './type'
 import { FileWhereInput, EnumPermissionTypeFilter } from '../inputs'
 import { SubscriptionAction } from '../enums'
 import { subscribeFunction } from '../../common/subscribeFunc'
+import { AppContext } from '../../context'
 
 export const FileSubscription = new GraphQLObjectType({
   name: 'FileSubscription',
@@ -28,7 +29,7 @@ export const fileSubscriptions = {
       action: { type: EnumPermissionTypeFilter },
     },
     subscribe: subscribeFunction,
-    resolve: async (root, args, ctx) => {
+    resolve: async (root, args, ctx: AppContext) => {
       let data
       if (root.action === 'FILE_DELETED') {
         data = { id: root.id }

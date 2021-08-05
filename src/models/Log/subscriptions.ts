@@ -3,6 +3,7 @@ import { Log } from './type'
 import { LogWhereInput, EnumPermissionTypeFilter } from '../inputs'
 import { SubscriptionAction } from '../enums'
 import { subscribeFunction } from '../../common/subscribeFunc'
+import { AppContext } from '../../context'
 
 export const LogSubscription = new GraphQLObjectType({
   name: 'LogSubscription',
@@ -28,7 +29,7 @@ export const logSubscriptions = {
       action: { type: EnumPermissionTypeFilter },
     },
     subscribe: subscribeFunction,
-    resolve: async (root, args, ctx) => {
+    resolve: async (root, args, ctx: AppContext) => {
       let data
       if (root.action === 'LOG_DELETED') {
         data = { id: root.id }

@@ -9,7 +9,7 @@ import {
   LogUpdateManyMutationInput,
   LogCreateManyInput,
 } from '../inputs'
-
+import { AppContext } from '../../context'
 export const logMutations = {
   createOneLog: {
     extensions: {
@@ -21,8 +21,8 @@ export const logMutations = {
     args: {
       data: { type: new GraphQLNonNull(LogCreateInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.log.create(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.log.create(args)
     },
   },
   updateOneLog: {
@@ -36,8 +36,8 @@ export const logMutations = {
       where: { type: new GraphQLNonNull(LogWhereUniqueInput) },
       data: { type: new GraphQLNonNull(LogUpdateInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.log.update(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.log.update(args)
     },
   },
   deleteOneLog: {
@@ -50,8 +50,8 @@ export const logMutations = {
     args: {
       where: { type: new GraphQLNonNull(LogWhereUniqueInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.log.delete(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.log.delete(args)
     },
   },
   upsertOneLog: {
@@ -66,8 +66,8 @@ export const logMutations = {
       create: { type: new GraphQLNonNull(LogCreateInput) },
       update: { type: new GraphQLNonNull(LogUpdateInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.log.upsert(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.log.upsert(args)
     },
   },
   createManyLog: {
@@ -85,8 +85,8 @@ export const logMutations = {
       },
       skipDuplicates: { type: GraphQLBoolean },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.log.createMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.log.createMany(args)
     },
   },
   updateManyLog: {
@@ -100,8 +100,8 @@ export const logMutations = {
       where: { type: new GraphQLNonNull(LogWhereInput) },
       data: { type: new GraphQLNonNull(LogUpdateManyMutationInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.log.updateMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.log.updateMany(args)
     },
   },
   deleteManyLog: {
@@ -114,8 +114,8 @@ export const logMutations = {
     args: {
       where: { type: new GraphQLNonNull(LogWhereInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.log.deleteMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.log.deleteMany(args)
     },
   },
 }

@@ -9,7 +9,7 @@ import {
   UserUpdateManyMutationInput,
   UserCreateManyInput,
 } from '../inputs'
-
+import { AppContext } from '../../context'
 export const userMutations = {
   createOneUser: {
     extensions: {
@@ -21,8 +21,8 @@ export const userMutations = {
     args: {
       data: { type: new GraphQLNonNull(UserCreateInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.user.create(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.user.create(args)
     },
   },
   updateOneUser: {
@@ -36,8 +36,8 @@ export const userMutations = {
       where: { type: new GraphQLNonNull(UserWhereUniqueInput) },
       data: { type: new GraphQLNonNull(UserUpdateInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.user.update(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.user.update(args)
     },
   },
   deleteOneUser: {
@@ -50,8 +50,8 @@ export const userMutations = {
     args: {
       where: { type: new GraphQLNonNull(UserWhereUniqueInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.user.delete(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.user.delete(args)
     },
   },
   upsertOneUser: {
@@ -66,8 +66,8 @@ export const userMutations = {
       create: { type: new GraphQLNonNull(UserCreateInput) },
       update: { type: new GraphQLNonNull(UserUpdateInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.user.upsert(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.user.upsert(args)
     },
   },
   createManyUser: {
@@ -85,8 +85,8 @@ export const userMutations = {
       },
       skipDuplicates: { type: GraphQLBoolean },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.user.createMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.user.createMany(args)
     },
   },
   updateManyUser: {
@@ -100,8 +100,8 @@ export const userMutations = {
       where: { type: new GraphQLNonNull(UserWhereInput) },
       data: { type: new GraphQLNonNull(UserUpdateManyMutationInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.user.updateMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.user.updateMany(args)
     },
   },
   deleteManyUser: {
@@ -114,8 +114,8 @@ export const userMutations = {
     args: {
       where: { type: new GraphQLNonNull(UserWhereInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.user.deleteMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.user.deleteMany(args)
     },
   },
 }

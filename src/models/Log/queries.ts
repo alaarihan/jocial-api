@@ -2,6 +2,7 @@ import { GraphQLInt, GraphQLList, GraphQLNonNull } from 'graphql'
 import { Log, AggregateLog } from './type'
 import { LogWhereUniqueInput, LogWhereInput, LogOrderByInput } from '../inputs'
 import { LogScalarFieldEnum } from '../enums'
+import { AppContext } from '../../context'
 export const logQueries = {
   findUniqueLog: {
     extensions: {
@@ -13,8 +14,8 @@ export const logQueries = {
     args: {
       where: { type: new GraphQLNonNull(LogWhereUniqueInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.log.findUnique(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.log.findUnique(args)
     },
   },
   findFirstLog: {
@@ -32,8 +33,8 @@ export const logQueries = {
       take: { type: GraphQLInt },
       distinct: { type: new GraphQLList(LogScalarFieldEnum) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.log.findFirst(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.log.findFirst(args)
     },
   },
   findManyLog: {
@@ -51,8 +52,8 @@ export const logQueries = {
       take: { type: GraphQLInt },
       distinct: { type: new GraphQLList(LogScalarFieldEnum) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.log.findMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.log.findMany(args)
     },
   },
   countLog: {
@@ -70,8 +71,8 @@ export const logQueries = {
       take: { type: GraphQLInt },
       distinct: { type: new GraphQLList(LogScalarFieldEnum) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.log.count(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.log.count(args)
     },
   },
   aggregateLog: {
@@ -88,8 +89,8 @@ export const logQueries = {
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.log.aggregate(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.log.aggregate(args)
     },
   },
 }

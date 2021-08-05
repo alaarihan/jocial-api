@@ -3,6 +3,7 @@ import { User } from './type'
 import { UserWhereInput, EnumPermissionTypeFilter } from '../inputs'
 import { SubscriptionAction } from '../enums'
 import { subscribeFunction } from '../../common/subscribeFunc'
+import { AppContext } from '../../context'
 
 export const UserSubscription = new GraphQLObjectType({
   name: 'UserSubscription',
@@ -28,7 +29,7 @@ export const userSubscriptions = {
       action: { type: EnumPermissionTypeFilter },
     },
     subscribe: subscribeFunction,
-    resolve: async (root, args, ctx) => {
+    resolve: async (root, args, ctx: AppContext) => {
       let data
       if (root.action === 'USER_DELETED') {
         data = { id: root.id }

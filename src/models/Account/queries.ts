@@ -6,6 +6,7 @@ import {
   AccountOrderByInput,
 } from '../inputs'
 import { AccountScalarFieldEnum } from '../enums'
+import { AppContext } from '../../context'
 export const accountQueries = {
   findUniqueAccount: {
     extensions: {
@@ -17,8 +18,8 @@ export const accountQueries = {
     args: {
       where: { type: new GraphQLNonNull(AccountWhereUniqueInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.account.findUnique(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.account.findUnique(args)
     },
   },
   findFirstAccount: {
@@ -36,8 +37,8 @@ export const accountQueries = {
       take: { type: GraphQLInt },
       distinct: { type: new GraphQLList(AccountScalarFieldEnum) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.account.findFirst(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.account.findFirst(args)
     },
   },
   findManyAccount: {
@@ -55,8 +56,8 @@ export const accountQueries = {
       take: { type: GraphQLInt },
       distinct: { type: new GraphQLList(AccountScalarFieldEnum) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.account.findMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.account.findMany(args)
     },
   },
   countAccount: {
@@ -74,8 +75,8 @@ export const accountQueries = {
       take: { type: GraphQLInt },
       distinct: { type: new GraphQLList(AccountScalarFieldEnum) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.account.count(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.account.count(args)
     },
   },
   aggregateAccount: {
@@ -92,8 +93,8 @@ export const accountQueries = {
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.account.aggregate(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.account.aggregate(args)
     },
   },
 }

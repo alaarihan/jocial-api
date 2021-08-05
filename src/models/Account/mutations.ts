@@ -9,7 +9,7 @@ import {
   AccountUpdateManyMutationInput,
   AccountCreateManyInput,
 } from '../inputs'
-
+import { AppContext } from '../../context'
 export const accountMutations = {
   createOneAccount: {
     extensions: {
@@ -21,8 +21,8 @@ export const accountMutations = {
     args: {
       data: { type: new GraphQLNonNull(AccountCreateInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.account.create(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.account.create(args)
     },
   },
   updateOneAccount: {
@@ -36,8 +36,8 @@ export const accountMutations = {
       where: { type: new GraphQLNonNull(AccountWhereUniqueInput) },
       data: { type: new GraphQLNonNull(AccountUpdateInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.account.update(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.account.update(args)
     },
   },
   deleteOneAccount: {
@@ -50,8 +50,8 @@ export const accountMutations = {
     args: {
       where: { type: new GraphQLNonNull(AccountWhereUniqueInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.account.delete(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.account.delete(args)
     },
   },
   upsertOneAccount: {
@@ -66,8 +66,8 @@ export const accountMutations = {
       create: { type: new GraphQLNonNull(AccountCreateInput) },
       update: { type: new GraphQLNonNull(AccountUpdateInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.account.upsert(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.account.upsert(args)
     },
   },
   createManyAccount: {
@@ -85,8 +85,8 @@ export const accountMutations = {
       },
       skipDuplicates: { type: GraphQLBoolean },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.account.createMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.account.createMany(args)
     },
   },
   updateManyAccount: {
@@ -100,8 +100,8 @@ export const accountMutations = {
       where: { type: new GraphQLNonNull(AccountWhereInput) },
       data: { type: new GraphQLNonNull(AccountUpdateManyMutationInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.account.updateMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.account.updateMany(args)
     },
   },
   deleteManyAccount: {
@@ -114,8 +114,8 @@ export const accountMutations = {
     args: {
       where: { type: new GraphQLNonNull(AccountWhereInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.account.deleteMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.account.deleteMany(args)
     },
   },
 }

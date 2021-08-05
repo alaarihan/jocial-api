@@ -9,7 +9,7 @@ import {
   FileUpdateManyMutationInput,
   FileCreateManyInput,
 } from '../inputs'
-
+import { AppContext } from '../../context'
 export const fileMutations = {
   createOneFile: {
     extensions: {
@@ -21,8 +21,8 @@ export const fileMutations = {
     args: {
       data: { type: new GraphQLNonNull(FileCreateInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.file.create(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.file.create(args)
     },
   },
   updateOneFile: {
@@ -36,8 +36,8 @@ export const fileMutations = {
       where: { type: new GraphQLNonNull(FileWhereUniqueInput) },
       data: { type: new GraphQLNonNull(FileUpdateInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.file.update(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.file.update(args)
     },
   },
   deleteOneFile: {
@@ -50,8 +50,8 @@ export const fileMutations = {
     args: {
       where: { type: new GraphQLNonNull(FileWhereUniqueInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.file.delete(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.file.delete(args)
     },
   },
   upsertOneFile: {
@@ -66,8 +66,8 @@ export const fileMutations = {
       create: { type: new GraphQLNonNull(FileCreateInput) },
       update: { type: new GraphQLNonNull(FileUpdateInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.file.upsert(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.file.upsert(args)
     },
   },
   createManyFile: {
@@ -85,8 +85,8 @@ export const fileMutations = {
       },
       skipDuplicates: { type: GraphQLBoolean },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.file.createMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.file.createMany(args)
     },
   },
   updateManyFile: {
@@ -100,8 +100,8 @@ export const fileMutations = {
       where: { type: new GraphQLNonNull(FileWhereInput) },
       data: { type: new GraphQLNonNull(FileUpdateManyMutationInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.file.updateMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.file.updateMany(args)
     },
   },
   deleteManyFile: {
@@ -114,8 +114,8 @@ export const fileMutations = {
     args: {
       where: { type: new GraphQLNonNull(FileWhereInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.file.deleteMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.file.deleteMany(args)
     },
   },
 }

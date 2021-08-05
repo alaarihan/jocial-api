@@ -3,6 +3,7 @@ import { Account } from './type'
 import { AccountWhereInput, EnumPermissionTypeFilter } from '../inputs'
 import { SubscriptionAction } from '../enums'
 import { subscribeFunction } from '../../common/subscribeFunc'
+import { AppContext } from '../../context'
 
 export const AccountSubscription = new GraphQLObjectType({
   name: 'AccountSubscription',
@@ -28,7 +29,7 @@ export const accountSubscriptions = {
       action: { type: EnumPermissionTypeFilter },
     },
     subscribe: subscribeFunction,
-    resolve: async (root, args, ctx) => {
+    resolve: async (root, args, ctx: AppContext) => {
       let data
       if (root.action === 'ACCOUNT_DELETED') {
         data = { id: root.id }

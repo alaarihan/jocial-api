@@ -6,6 +6,7 @@ import {
   PermissionOrderByInput,
 } from '../inputs'
 import { PermissionScalarFieldEnum } from '../enums'
+import { AppContext } from '../../context'
 export const permissionQueries = {
   findUniquePermission: {
     extensions: {
@@ -17,8 +18,8 @@ export const permissionQueries = {
     args: {
       where: { type: new GraphQLNonNull(PermissionWhereUniqueInput) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.permission.findUnique(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.permission.findUnique(args)
     },
   },
   findFirstPermission: {
@@ -36,8 +37,8 @@ export const permissionQueries = {
       take: { type: GraphQLInt },
       distinct: { type: new GraphQLList(PermissionScalarFieldEnum) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.permission.findFirst(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.permission.findFirst(args)
     },
   },
   findManyPermission: {
@@ -55,8 +56,8 @@ export const permissionQueries = {
       take: { type: GraphQLInt },
       distinct: { type: new GraphQLList(PermissionScalarFieldEnum) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.permission.findMany(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.permission.findMany(args)
     },
   },
   countPermission: {
@@ -74,8 +75,8 @@ export const permissionQueries = {
       take: { type: GraphQLInt },
       distinct: { type: new GraphQLList(PermissionScalarFieldEnum) },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.permission.count(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.permission.count(args)
     },
   },
   aggregatePermission: {
@@ -92,8 +93,8 @@ export const permissionQueries = {
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
     },
-    async resolve(_root, args, ctx) {
-      return ctx.prisma.permission.aggregate(args as any)
+    async resolve(_root, args, ctx: AppContext) {
+      return ctx.prisma.permission.aggregate(args)
     },
   },
 }
