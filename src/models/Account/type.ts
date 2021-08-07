@@ -48,6 +48,9 @@ export const Account = new GraphQLObjectType({
     statusDuration: {
       type: new GraphQLNonNull(GraphQLInt),
     },
+    loginActivity: {
+      type: new GraphQLNonNull(AccountStatus),
+    },
     createdAt: {
       type: new GraphQLNonNull(GraphQLDateTime),
     },
@@ -103,6 +106,7 @@ export const AccountGroupByOutputType = new GraphQLObjectType({
     lastActivity: { type: GraphQLDateTime },
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
+    loginActivity: { type: AccountStatus },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     _count: { type: AccountCountAggregateOutputType },
@@ -127,6 +131,7 @@ export const AccountCountAggregateOutputType = new GraphQLObjectType({
     lastActivity: { type: GraphQLInt },
     status: { type: GraphQLInt },
     statusDuration: { type: GraphQLInt },
+    loginActivity: { type: GraphQLInt },
     createdAt: { type: GraphQLInt },
     updatedAt: { type: GraphQLInt },
     _all: { type: GraphQLInt },
@@ -167,6 +172,7 @@ export const AccountMinAggregateOutputType = new GraphQLObjectType({
     lastActivity: { type: GraphQLDateTime },
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
+    loginActivity: { type: AccountStatus },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
   }),
@@ -186,6 +192,7 @@ export const AccountMaxAggregateOutputType = new GraphQLObjectType({
     lastActivity: { type: GraphQLDateTime },
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
+    loginActivity: { type: AccountStatus },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
   }),

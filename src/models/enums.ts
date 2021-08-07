@@ -108,6 +108,7 @@ export const AccountScalarFieldEnum = new GraphQLEnumType({
     lastActivity: { value: 'lastActivity' },
     status: { value: 'status' },
     statusDuration: { value: 'statusDuration' },
+    loginActivity: { value: 'loginActivity' },
     createdAt: { value: 'createdAt' },
     updatedAt: { value: 'updatedAt' },
   },
