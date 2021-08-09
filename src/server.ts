@@ -1,6 +1,7 @@
 import fastify from 'fastify'
 import mercurius from 'mercurius'
 import { applyMiddleware } from 'graphql-middleware'
+import fetch from 'node-fetch'
 import { acl, getRoleSchemaCache } from './auth'
 import { schema as mainSchema } from './schema'
 import { createContext, AppContext } from './context'
@@ -40,6 +41,14 @@ async function start() {
   })
 
   app.register(require('./auth/src/routes'))
+
+  app.post('/callWebhook', async (req, reply) => {
+    if (req.headers['secret'] !== process.env.ROOT_SECRET) {
+      return reply.status(403).send('Unauthorized!')
+    }
+    await fetch(req.body['webhook'])
+    return reply.status(200).send('The url has been called successfully.')
+  })
 
   await app.ready()
   app.graphql.addHook(
