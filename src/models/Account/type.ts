@@ -9,7 +9,7 @@ import {
 } from 'graphql'
 import { GraphQLDateTime, GraphQLJSON } from 'graphql-scalars'
 import { User, Log } from '../types'
-import { AccountStatus, LogScalarFieldEnum } from '../enums'
+import { AccountStatus, Day, LogScalarFieldEnum } from '../enums'
 import { LogOrderByInput, LogWhereInput, LogWhereUniqueInput } from '../inputs'
 
 export const Account = new GraphQLObjectType({
@@ -51,6 +51,12 @@ export const Account = new GraphQLObjectType({
     loginActivity: {
       type: new GraphQLNonNull(AccountStatus),
     },
+    campaignStart: {
+      type: Day,
+    },
+    Notes: {
+      type: GraphQLString,
+    },
     createdAt: {
       type: new GraphQLNonNull(GraphQLDateTime),
     },
@@ -64,7 +70,7 @@ export const Account = new GraphQLObjectType({
       type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(Log))),
       args: {
         where: { type: LogWhereInput },
-        orderBy: { type: LogOrderByInput },
+        orderBy: { type: LogOrderByWithRelationInput },
         cursor: { type: LogWhereUniqueInput },
         take: { type: GraphQLInt },
         skip: { type: GraphQLInt },
@@ -80,15 +86,10 @@ export const AggregateAccount = new GraphQLObjectType({
   name: 'AggregateAccount',
   fields: () => ({
     _count: { type: AccountCountAggregateOutputType },
-    count: { type: AccountCountAggregateOutputType },
     _avg: { type: AccountAvgAggregateOutputType },
-    avg: { type: AccountAvgAggregateOutputType },
     _sum: { type: AccountSumAggregateOutputType },
-    sum: { type: AccountSumAggregateOutputType },
     _min: { type: AccountMinAggregateOutputType },
-    min: { type: AccountMinAggregateOutputType },
     _max: { type: AccountMaxAggregateOutputType },
-    max: { type: AccountMaxAggregateOutputType },
   }),
 })
 
@@ -107,6 +108,8 @@ export const AccountGroupByOutputType = new GraphQLObjectType({
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
     loginActivity: { type: AccountStatus },
+    campaignStart: { type: Day },
+    Notes: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     _count: { type: AccountCountAggregateOutputType },
@@ -114,6 +117,13 @@ export const AccountGroupByOutputType = new GraphQLObjectType({
     _sum: { type: AccountSumAggregateOutputType },
     _min: { type: AccountMinAggregateOutputType },
     _max: { type: AccountMaxAggregateOutputType },
+  }),
+})
+
+export const AccountCountOutputType = new GraphQLObjectType({
+  name: 'AccountCountOutputType',
+  fields: () => ({
+    logs: { type: GraphQLInt },
   }),
 })
 
@@ -132,6 +142,8 @@ export const AccountCountAggregateOutputType = new GraphQLObjectType({
     status: { type: GraphQLInt },
     statusDuration: { type: GraphQLInt },
     loginActivity: { type: GraphQLInt },
+    campaignStart: { type: GraphQLInt },
+    Notes: { type: GraphQLInt },
     createdAt: { type: GraphQLInt },
     updatedAt: { type: GraphQLInt },
     _all: { type: GraphQLInt },
@@ -173,6 +185,8 @@ export const AccountMinAggregateOutputType = new GraphQLObjectType({
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
     loginActivity: { type: AccountStatus },
+    campaignStart: { type: Day },
+    Notes: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
   }),
@@ -193,6 +207,8 @@ export const AccountMaxAggregateOutputType = new GraphQLObjectType({
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
     loginActivity: { type: AccountStatus },
+    campaignStart: { type: Day },
+    Notes: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
   }),

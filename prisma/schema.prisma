@@ -76,6 +76,8 @@ model Account {
   status         AccountStatus @default(OFFLINE)
   statusDuration Int           @default(0)
   loginActivity  AccountStatus @default(OFFLINE)
+  campaignStart  Day?
+  Notes          String?
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
   owner          User          @relation(fields: [ownerId], references: [id])
@@ -103,4 +105,14 @@ enum AccountStatus {
   ONLINE
   DONE
   BLOCKED
+}
+
+enum Day {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
 }

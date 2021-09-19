@@ -41,6 +41,19 @@ export const AccountStatus = new GraphQLEnumType({
   },
 })
 
+export const Day = new GraphQLEnumType({
+  name: 'Day',
+  values: {
+    MONDAY: { value: 'MONDAY' },
+    TUESDAY: { value: 'TUESDAY' },
+    WEDNESDAY: { value: 'WEDNESDAY' },
+    THURSDAY: { value: 'THURSDAY' },
+    FRIDAY: { value: 'FRIDAY' },
+    SATURDAY: { value: 'SATURDAY' },
+    SUNDAY: { value: 'SUNDAY' },
+  },
+})
+
 export const LogType = new GraphQLEnumType({
   name: 'LogType',
   values: {
@@ -109,6 +122,8 @@ export const AccountScalarFieldEnum = new GraphQLEnumType({
     status: { value: 'status' },
     statusDuration: { value: 'statusDuration' },
     loginActivity: { value: 'loginActivity' },
+    campaignStart: { value: 'campaignStart' },
+    Notes: { value: 'Notes' },
     createdAt: { value: 'createdAt' },
     updatedAt: { value: 'updatedAt' },
   },
@@ -134,10 +149,27 @@ export const SortOrder = new GraphQLEnumType({
   },
 })
 
+export const NullableJsonNullValueInput = new GraphQLEnumType({
+  name: 'NullableJsonNullValueInput',
+  values: {
+    DbNull: { value: 'DbNull' },
+    JsonNull: { value: 'JsonNull' },
+  },
+})
+
 export const QueryMode = new GraphQLEnumType({
   name: 'QueryMode',
   values: {
     default: { value: 'default' },
     insensitive: { value: 'insensitive' },
+  },
+})
+
+export const JsonNullValueFilter = new GraphQLEnumType({
+  name: 'JsonNullValueFilter',
+  values: {
+    DbNull: { value: 'DbNull' },
+    JsonNull: { value: 'JsonNull' },
+    AnyNull: { value: 'AnyNull' },
   },
 })

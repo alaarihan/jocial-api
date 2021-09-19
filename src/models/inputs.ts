@@ -13,6 +13,7 @@ import {
   UserRole,
   PermissionType,
   AccountStatus,
+  Day,
   LogType,
   PermissionScalarFieldEnum,
   FileScalarFieldEnum,
@@ -20,7 +21,9 @@ import {
   AccountScalarFieldEnum,
   LogScalarFieldEnum,
   SortOrder,
+  NullableJsonNullValueInput,
   QueryMode,
+  JsonNullValueFilter,
 } from './enums'
 
 export const SimpleStringFilter = new GraphQLInputObjectType({
@@ -53,8 +56,8 @@ export const PermissionWhereInput = new GraphQLInputObjectType({
   }),
 })
 
-export const PermissionOrderByInput = new GraphQLInputObjectType({
-  name: 'PermissionOrderByInput',
+export const PermissionOrderByWithRelationInput = new GraphQLInputObjectType({
+  name: 'PermissionOrderByWithRelationInput',
   fields: () => ({
     id: { type: SortOrder },
     active: { type: SortOrder },
@@ -72,6 +75,25 @@ export const PermissionWhereUniqueInput = new GraphQLInputObjectType({
     role_type_model: { type: PermissionRoleTypeModelCompoundUniqueInput },
   }),
 })
+
+export const PermissionOrderByWithAggregationInput = new GraphQLInputObjectType(
+  {
+    name: 'PermissionOrderByWithAggregationInput',
+    fields: () => ({
+      id: { type: SortOrder },
+      active: { type: SortOrder },
+      role: { type: SortOrder },
+      type: { type: SortOrder },
+      model: { type: SortOrder },
+      def: { type: SortOrder },
+      _count: { type: PermissionCountOrderByAggregateInput },
+      _avg: { type: PermissionAvgOrderByAggregateInput },
+      _max: { type: PermissionMaxOrderByAggregateInput },
+      _min: { type: PermissionMinOrderByAggregateInput },
+      _sum: { type: PermissionSumOrderByAggregateInput },
+    }),
+  },
+)
 
 export const PermissionScalarWhereWithAggregatesInput =
   new GraphQLInputObjectType({
@@ -119,8 +141,8 @@ export const FileWhereInput = new GraphQLInputObjectType({
   }),
 })
 
-export const FileOrderByInput = new GraphQLInputObjectType({
-  name: 'FileOrderByInput',
+export const FileOrderByWithRelationInput = new GraphQLInputObjectType({
+  name: 'FileOrderByWithRelationInput',
   fields: () => ({
     id: { type: SortOrder },
     name: { type: SortOrder },
@@ -139,6 +161,26 @@ export const FileWhereUniqueInput = new GraphQLInputObjectType({
   fields: () => ({
     id: { type: GraphQLInt },
     bucket_path: { type: FileBucketPathCompoundUniqueInput },
+  }),
+})
+
+export const FileOrderByWithAggregationInput = new GraphQLInputObjectType({
+  name: 'FileOrderByWithAggregationInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    name: { type: SortOrder },
+    bucket: { type: SortOrder },
+    mimeType: { type: SortOrder },
+    path: { type: SortOrder },
+    createdAt: { type: SortOrder },
+    updatedAt: { type: SortOrder },
+    meta: { type: SortOrder },
+    tags: { type: SortOrder },
+    _count: { type: FileCountOrderByAggregateInput },
+    _avg: { type: FileAvgOrderByAggregateInput },
+    _max: { type: FileMaxOrderByAggregateInput },
+    _min: { type: FileMinOrderByAggregateInput },
+    _sum: { type: FileSumOrderByAggregateInput },
   }),
 })
 
@@ -193,8 +235,8 @@ export const UserWhereInput = new GraphQLInputObjectType({
   }),
 })
 
-export const UserOrderByInput = new GraphQLInputObjectType({
-  name: 'UserOrderByInput',
+export const UserOrderByWithRelationInput = new GraphQLInputObjectType({
+  name: 'UserOrderByWithRelationInput',
   fields: () => ({
     id: { type: SortOrder },
     email: { type: SortOrder },
@@ -207,6 +249,7 @@ export const UserOrderByInput = new GraphQLInputObjectType({
     dateOfBirth: { type: SortOrder },
     createdAt: { type: SortOrder },
     updatedAt: { type: SortOrder },
+    accounts: { type: AccountOrderByRelationAggregateInput },
   }),
 })
 
@@ -215,6 +258,28 @@ export const UserWhereUniqueInput = new GraphQLInputObjectType({
   fields: () => ({
     id: { type: GraphQLInt },
     email: { type: GraphQLString },
+  }),
+})
+
+export const UserOrderByWithAggregationInput = new GraphQLInputObjectType({
+  name: 'UserOrderByWithAggregationInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    email: { type: SortOrder },
+    firstName: { type: SortOrder },
+    lastName: { type: SortOrder },
+    password: { type: SortOrder },
+    role: { type: SortOrder },
+    verificationToken: { type: SortOrder },
+    country: { type: SortOrder },
+    dateOfBirth: { type: SortOrder },
+    createdAt: { type: SortOrder },
+    updatedAt: { type: SortOrder },
+    _count: { type: UserCountOrderByAggregateInput },
+    _avg: { type: UserAvgOrderByAggregateInput },
+    _max: { type: UserMaxOrderByAggregateInput },
+    _min: { type: UserMinOrderByAggregateInput },
+    _sum: { type: UserSumOrderByAggregateInput },
   }),
 })
 
@@ -268,6 +333,8 @@ export const AccountWhereInput = new GraphQLInputObjectType({
     status: { type: EnumAccountStatusFilter },
     statusDuration: { type: IntFilter },
     loginActivity: { type: EnumAccountStatusFilter },
+    campaignStart: { type: EnumDayNullableFilter },
+    Notes: { type: StringNullableFilter },
     createdAt: { type: DateTimeFilter },
     updatedAt: { type: DateTimeFilter },
     owner: { type: UserWhereInput },
@@ -275,8 +342,8 @@ export const AccountWhereInput = new GraphQLInputObjectType({
   }),
 })
 
-export const AccountOrderByInput = new GraphQLInputObjectType({
-  name: 'AccountOrderByInput',
+export const AccountOrderByWithRelationInput = new GraphQLInputObjectType({
+  name: 'AccountOrderByWithRelationInput',
   fields: () => ({
     id: { type: SortOrder },
     ownerId: { type: SortOrder },
@@ -290,8 +357,12 @@ export const AccountOrderByInput = new GraphQLInputObjectType({
     status: { type: SortOrder },
     statusDuration: { type: SortOrder },
     loginActivity: { type: SortOrder },
+    campaignStart: { type: SortOrder },
+    Notes: { type: SortOrder },
     createdAt: { type: SortOrder },
     updatedAt: { type: SortOrder },
+    owner: { type: UserOrderByWithRelationInput },
+    logs: { type: LogOrderByRelationAggregateInput },
   }),
 })
 
@@ -299,6 +370,33 @@ export const AccountWhereUniqueInput = new GraphQLInputObjectType({
   name: 'AccountWhereUniqueInput',
   fields: () => ({
     id: { type: GraphQLInt },
+  }),
+})
+
+export const AccountOrderByWithAggregationInput = new GraphQLInputObjectType({
+  name: 'AccountOrderByWithAggregationInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    ownerId: { type: SortOrder },
+    name: { type: SortOrder },
+    email: { type: SortOrder },
+    phone: { type: SortOrder },
+    username: { type: SortOrder },
+    password: { type: SortOrder },
+    pin: { type: SortOrder },
+    lastActivity: { type: SortOrder },
+    status: { type: SortOrder },
+    statusDuration: { type: SortOrder },
+    loginActivity: { type: SortOrder },
+    campaignStart: { type: SortOrder },
+    Notes: { type: SortOrder },
+    createdAt: { type: SortOrder },
+    updatedAt: { type: SortOrder },
+    _count: { type: AccountCountOrderByAggregateInput },
+    _avg: { type: AccountAvgOrderByAggregateInput },
+    _max: { type: AccountMaxOrderByAggregateInput },
+    _min: { type: AccountMinOrderByAggregateInput },
+    _sum: { type: AccountSumOrderByAggregateInput },
   }),
 })
 
@@ -333,6 +431,8 @@ export const AccountScalarWhereWithAggregatesInput = new GraphQLInputObjectType(
       status: { type: EnumAccountStatusWithAggregatesFilter },
       statusDuration: { type: IntWithAggregatesFilter },
       loginActivity: { type: EnumAccountStatusWithAggregatesFilter },
+      campaignStart: { type: EnumDayNullableWithAggregatesFilter },
+      Notes: { type: StringNullableWithAggregatesFilter },
       createdAt: { type: DateTimeWithAggregatesFilter },
       updatedAt: { type: DateTimeWithAggregatesFilter },
     }),
@@ -355,8 +455,8 @@ export const LogWhereInput = new GraphQLInputObjectType({
   }),
 })
 
-export const LogOrderByInput = new GraphQLInputObjectType({
-  name: 'LogOrderByInput',
+export const LogOrderByWithRelationInput = new GraphQLInputObjectType({
+  name: 'LogOrderByWithRelationInput',
   fields: () => ({
     id: { type: SortOrder },
     accountId: { type: SortOrder },
@@ -364,6 +464,7 @@ export const LogOrderByInput = new GraphQLInputObjectType({
     message: { type: SortOrder },
     createdAt: { type: SortOrder },
     updatedAt: { type: SortOrder },
+    account: { type: AccountOrderByWithRelationInput },
   }),
 })
 
@@ -371,6 +472,23 @@ export const LogWhereUniqueInput = new GraphQLInputObjectType({
   name: 'LogWhereUniqueInput',
   fields: () => ({
     id: { type: GraphQLInt },
+  }),
+})
+
+export const LogOrderByWithAggregationInput = new GraphQLInputObjectType({
+  name: 'LogOrderByWithAggregationInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    accountId: { type: SortOrder },
+    type: { type: SortOrder },
+    message: { type: SortOrder },
+    createdAt: { type: SortOrder },
+    updatedAt: { type: SortOrder },
+    _count: { type: LogCountOrderByAggregateInput },
+    _avg: { type: LogAvgOrderByAggregateInput },
+    _max: { type: LogMaxOrderByAggregateInput },
+    _min: { type: LogMinOrderByAggregateInput },
+    _sum: { type: LogSumOrderByAggregateInput },
   }),
 })
 
@@ -408,7 +526,7 @@ export const PermissionCreateInput = new GraphQLInputObjectType({
     role: { type: new GraphQLNonNull(UserRole) },
     type: { type: new GraphQLNonNull(PermissionType) },
     model: { type: new GraphQLNonNull(GraphQLString) },
-    def: { type: GraphQLJSON },
+    def: { type: NullableJsonNullValueInput },
   }),
 })
 
@@ -420,7 +538,7 @@ export const PermissionUncheckedCreateInput = new GraphQLInputObjectType({
     role: { type: new GraphQLNonNull(UserRole) },
     type: { type: new GraphQLNonNull(PermissionType) },
     model: { type: new GraphQLNonNull(GraphQLString) },
-    def: { type: GraphQLJSON },
+    def: { type: NullableJsonNullValueInput },
   }),
 })
 
@@ -431,7 +549,7 @@ export const PermissionUpdateInput = new GraphQLInputObjectType({
     role: { type: UserRole },
     type: { type: PermissionType },
     model: { type: GraphQLString },
-    def: { type: GraphQLJSON },
+    def: { type: NullableJsonNullValueInput },
   }),
 })
 
@@ -443,7 +561,7 @@ export const PermissionUncheckedUpdateInput = new GraphQLInputObjectType({
     role: { type: UserRole },
     type: { type: PermissionType },
     model: { type: GraphQLString },
-    def: { type: GraphQLJSON },
+    def: { type: NullableJsonNullValueInput },
   }),
 })
 
@@ -455,7 +573,7 @@ export const PermissionCreateManyInput = new GraphQLInputObjectType({
     role: { type: new GraphQLNonNull(UserRole) },
     type: { type: new GraphQLNonNull(PermissionType) },
     model: { type: new GraphQLNonNull(GraphQLString) },
-    def: { type: GraphQLJSON },
+    def: { type: NullableJsonNullValueInput },
   }),
 })
 
@@ -466,7 +584,7 @@ export const PermissionUpdateManyMutationInput = new GraphQLInputObjectType({
     role: { type: UserRole },
     type: { type: PermissionType },
     model: { type: GraphQLString },
-    def: { type: GraphQLJSON },
+    def: { type: NullableJsonNullValueInput },
   }),
 })
 
@@ -478,7 +596,7 @@ export const PermissionUncheckedUpdateManyInput = new GraphQLInputObjectType({
     role: { type: UserRole },
     type: { type: PermissionType },
     model: { type: GraphQLString },
-    def: { type: GraphQLJSON },
+    def: { type: NullableJsonNullValueInput },
   }),
 })
 
@@ -491,7 +609,7 @@ export const FileCreateInput = new GraphQLInputObjectType({
     path: { type: new GraphQLNonNull(GraphQLString) },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
-    meta: { type: GraphQLJSON },
+    meta: { type: NullableJsonNullValueInput },
     tags: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
   }),
 })
@@ -506,7 +624,7 @@ export const FileUncheckedCreateInput = new GraphQLInputObjectType({
     path: { type: new GraphQLNonNull(GraphQLString) },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
-    meta: { type: GraphQLJSON },
+    meta: { type: NullableJsonNullValueInput },
     tags: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
   }),
 })
@@ -520,7 +638,7 @@ export const FileUpdateInput = new GraphQLInputObjectType({
     path: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
-    meta: { type: GraphQLJSON },
+    meta: { type: NullableJsonNullValueInput },
     tags: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
   }),
 })
@@ -535,7 +653,7 @@ export const FileUncheckedUpdateInput = new GraphQLInputObjectType({
     path: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
-    meta: { type: GraphQLJSON },
+    meta: { type: NullableJsonNullValueInput },
     tags: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
   }),
 })
@@ -550,7 +668,7 @@ export const FileCreateManyInput = new GraphQLInputObjectType({
     path: { type: new GraphQLNonNull(GraphQLString) },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
-    meta: { type: GraphQLJSON },
+    meta: { type: NullableJsonNullValueInput },
     tags: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
   }),
 })
@@ -564,7 +682,7 @@ export const FileUpdateManyMutationInput = new GraphQLInputObjectType({
     path: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
-    meta: { type: GraphQLJSON },
+    meta: { type: NullableJsonNullValueInput },
     tags: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
   }),
 })
@@ -579,7 +697,7 @@ export const FileUncheckedUpdateManyInput = new GraphQLInputObjectType({
     path: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
-    meta: { type: GraphQLJSON },
+    meta: { type: NullableJsonNullValueInput },
     tags: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
   }),
 })
@@ -717,6 +835,8 @@ export const AccountCreateInput = new GraphQLInputObjectType({
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
     loginActivity: { type: AccountStatus },
+    campaignStart: { type: Day },
+    Notes: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     owner: {
@@ -741,6 +861,8 @@ export const AccountUncheckedCreateInput = new GraphQLInputObjectType({
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
     loginActivity: { type: AccountStatus },
+    campaignStart: { type: Day },
+    Notes: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     logs: { type: LogUncheckedCreateNestedManyWithoutAccountInput },
@@ -760,6 +882,8 @@ export const AccountUpdateInput = new GraphQLInputObjectType({
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
     loginActivity: { type: AccountStatus },
+    campaignStart: { type: Day },
+    Notes: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     owner: { type: UserUpdateOneRequiredWithoutAccountsInput },
@@ -782,6 +906,8 @@ export const AccountUncheckedUpdateInput = new GraphQLInputObjectType({
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
     loginActivity: { type: AccountStatus },
+    campaignStart: { type: Day },
+    Notes: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     logs: { type: LogUncheckedUpdateManyWithoutAccountInput },
@@ -803,6 +929,8 @@ export const AccountCreateManyInput = new GraphQLInputObjectType({
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
     loginActivity: { type: AccountStatus },
+    campaignStart: { type: Day },
+    Notes: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
   }),
@@ -821,6 +949,8 @@ export const AccountUpdateManyMutationInput = new GraphQLInputObjectType({
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
     loginActivity: { type: AccountStatus },
+    campaignStart: { type: Day },
+    Notes: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
   }),
@@ -841,6 +971,8 @@ export const AccountUncheckedUpdateManyInput = new GraphQLInputObjectType({
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
     loginActivity: { type: AccountStatus },
+    campaignStart: { type: Day },
+    Notes: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
   }),
@@ -989,8 +1121,8 @@ export const StringFilter = new GraphQLInputObjectType({
 export const JsonNullableFilter = new GraphQLInputObjectType({
   name: 'JsonNullableFilter',
   fields: () => ({
-    equals: { type: GraphQLJSON },
-    not: { type: GraphQLJSON },
+    equals: { type: JsonNullValueFilter },
+    not: { type: JsonNullValueFilter },
   }),
 })
 
@@ -1004,6 +1136,54 @@ export const PermissionRoleTypeModelCompoundUniqueInput =
     }),
   })
 
+export const PermissionCountOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'PermissionCountOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    active: { type: SortOrder },
+    role: { type: SortOrder },
+    type: { type: SortOrder },
+    model: { type: SortOrder },
+    def: { type: SortOrder },
+  }),
+})
+
+export const PermissionAvgOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'PermissionAvgOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+  }),
+})
+
+export const PermissionMaxOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'PermissionMaxOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    active: { type: SortOrder },
+    role: { type: SortOrder },
+    type: { type: SortOrder },
+    model: { type: SortOrder },
+  }),
+})
+
+export const PermissionMinOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'PermissionMinOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    active: { type: SortOrder },
+    role: { type: SortOrder },
+    type: { type: SortOrder },
+    model: { type: SortOrder },
+  }),
+})
+
+export const PermissionSumOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'PermissionSumOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+  }),
+})
+
 export const IntWithAggregatesFilter = new GraphQLInputObjectType({
   name: 'IntWithAggregatesFilter',
   fields: () => ({
@@ -1016,15 +1196,10 @@ export const IntWithAggregatesFilter = new GraphQLInputObjectType({
     gte: { type: GraphQLInt },
     not: { type: NestedIntWithAggregatesFilter },
     _count: { type: NestedIntFilter },
-    count: { type: NestedIntFilter },
     _avg: { type: NestedFloatFilter },
-    avg: { type: NestedFloatFilter },
     _sum: { type: NestedIntFilter },
-    sum: { type: NestedIntFilter },
     _min: { type: NestedIntFilter },
-    min: { type: NestedIntFilter },
     _max: { type: NestedIntFilter },
-    max: { type: NestedIntFilter },
   }),
 })
 
@@ -1034,11 +1209,8 @@ export const BoolWithAggregatesFilter = new GraphQLInputObjectType({
     equals: { type: GraphQLBoolean },
     not: { type: NestedBoolWithAggregatesFilter },
     _count: { type: NestedIntFilter },
-    count: { type: NestedIntFilter },
     _min: { type: NestedBoolFilter },
-    min: { type: NestedBoolFilter },
     _max: { type: NestedBoolFilter },
-    max: { type: NestedBoolFilter },
   }),
 })
 
@@ -1050,11 +1222,8 @@ export const EnumUserRoleWithAggregatesFilter = new GraphQLInputObjectType({
     notIn: { type: new GraphQLList(new GraphQLNonNull(UserRole)) },
     not: { type: NestedEnumUserRoleWithAggregatesFilter },
     _count: { type: NestedIntFilter },
-    count: { type: NestedIntFilter },
     _min: { type: NestedEnumUserRoleFilter },
-    min: { type: NestedEnumUserRoleFilter },
     _max: { type: NestedEnumUserRoleFilter },
-    max: { type: NestedEnumUserRoleFilter },
   }),
 })
 
@@ -1067,11 +1236,8 @@ export const EnumPermissionTypeWithAggregatesFilter =
       notIn: { type: new GraphQLList(new GraphQLNonNull(PermissionType)) },
       not: { type: NestedEnumPermissionTypeWithAggregatesFilter },
       _count: { type: NestedIntFilter },
-      count: { type: NestedIntFilter },
       _min: { type: NestedEnumPermissionTypeFilter },
-      min: { type: NestedEnumPermissionTypeFilter },
       _max: { type: NestedEnumPermissionTypeFilter },
-      max: { type: NestedEnumPermissionTypeFilter },
     }),
   })
 
@@ -1091,25 +1257,19 @@ export const StringWithAggregatesFilter = new GraphQLInputObjectType({
     mode: { type: QueryMode },
     not: { type: NestedStringWithAggregatesFilter },
     _count: { type: NestedIntFilter },
-    count: { type: NestedIntFilter },
     _min: { type: NestedStringFilter },
-    min: { type: NestedStringFilter },
     _max: { type: NestedStringFilter },
-    max: { type: NestedStringFilter },
   }),
 })
 
 export const JsonNullableWithAggregatesFilter = new GraphQLInputObjectType({
   name: 'JsonNullableWithAggregatesFilter',
   fields: () => ({
-    equals: { type: GraphQLJSON },
-    not: { type: GraphQLJSON },
+    equals: { type: JsonNullValueFilter },
+    not: { type: JsonNullValueFilter },
     _count: { type: NestedIntNullableFilter },
-    count: { type: NestedIntNullableFilter },
     _min: { type: NestedJsonNullableFilter },
-    min: { type: NestedJsonNullableFilter },
     _max: { type: NestedJsonNullableFilter },
-    max: { type: NestedJsonNullableFilter },
   }),
 })
 
@@ -1146,6 +1306,61 @@ export const FileBucketPathCompoundUniqueInput = new GraphQLInputObjectType({
   }),
 })
 
+export const FileCountOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'FileCountOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    name: { type: SortOrder },
+    bucket: { type: SortOrder },
+    mimeType: { type: SortOrder },
+    path: { type: SortOrder },
+    createdAt: { type: SortOrder },
+    updatedAt: { type: SortOrder },
+    meta: { type: SortOrder },
+    tags: { type: SortOrder },
+  }),
+})
+
+export const FileAvgOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'FileAvgOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+  }),
+})
+
+export const FileMaxOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'FileMaxOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    name: { type: SortOrder },
+    bucket: { type: SortOrder },
+    mimeType: { type: SortOrder },
+    path: { type: SortOrder },
+    createdAt: { type: SortOrder },
+    updatedAt: { type: SortOrder },
+  }),
+})
+
+export const FileMinOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'FileMinOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    name: { type: SortOrder },
+    bucket: { type: SortOrder },
+    mimeType: { type: SortOrder },
+    path: { type: SortOrder },
+    createdAt: { type: SortOrder },
+    updatedAt: { type: SortOrder },
+  }),
+})
+
+export const FileSumOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'FileSumOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+  }),
+})
+
 export const DateTimeWithAggregatesFilter = new GraphQLInputObjectType({
   name: 'DateTimeWithAggregatesFilter',
   fields: () => ({
@@ -1158,11 +1373,8 @@ export const DateTimeWithAggregatesFilter = new GraphQLInputObjectType({
     gte: { type: GraphQLDateTime },
     not: { type: NestedDateTimeWithAggregatesFilter },
     _count: { type: NestedIntFilter },
-    count: { type: NestedIntFilter },
     _min: { type: NestedDateTimeFilter },
-    min: { type: NestedDateTimeFilter },
     _max: { type: NestedDateTimeFilter },
-    max: { type: NestedDateTimeFilter },
   }),
 })
 
@@ -1207,6 +1419,78 @@ export const AccountListRelationFilter = new GraphQLInputObjectType({
   }),
 })
 
+export const AccountOrderByRelationAggregateInput = new GraphQLInputObjectType({
+  name: 'AccountOrderByRelationAggregateInput',
+  fields: () => ({
+    _count: { type: SortOrder },
+  }),
+})
+
+export const UserCountOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'UserCountOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    email: { type: SortOrder },
+    firstName: { type: SortOrder },
+    lastName: { type: SortOrder },
+    password: { type: SortOrder },
+    role: { type: SortOrder },
+    verificationToken: { type: SortOrder },
+    country: { type: SortOrder },
+    dateOfBirth: { type: SortOrder },
+    createdAt: { type: SortOrder },
+    updatedAt: { type: SortOrder },
+  }),
+})
+
+export const UserAvgOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'UserAvgOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+  }),
+})
+
+export const UserMaxOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'UserMaxOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    email: { type: SortOrder },
+    firstName: { type: SortOrder },
+    lastName: { type: SortOrder },
+    password: { type: SortOrder },
+    role: { type: SortOrder },
+    verificationToken: { type: SortOrder },
+    country: { type: SortOrder },
+    dateOfBirth: { type: SortOrder },
+    createdAt: { type: SortOrder },
+    updatedAt: { type: SortOrder },
+  }),
+})
+
+export const UserMinOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'UserMinOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    email: { type: SortOrder },
+    firstName: { type: SortOrder },
+    lastName: { type: SortOrder },
+    password: { type: SortOrder },
+    role: { type: SortOrder },
+    verificationToken: { type: SortOrder },
+    country: { type: SortOrder },
+    dateOfBirth: { type: SortOrder },
+    createdAt: { type: SortOrder },
+    updatedAt: { type: SortOrder },
+  }),
+})
+
+export const UserSumOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'UserSumOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+  }),
+})
+
 export const StringNullableWithAggregatesFilter = new GraphQLInputObjectType({
   name: 'StringNullableWithAggregatesFilter',
   fields: () => ({
@@ -1223,11 +1507,8 @@ export const StringNullableWithAggregatesFilter = new GraphQLInputObjectType({
     mode: { type: QueryMode },
     not: { type: NestedStringNullableWithAggregatesFilter },
     _count: { type: NestedIntNullableFilter },
-    count: { type: NestedIntNullableFilter },
     _min: { type: NestedStringNullableFilter },
-    min: { type: NestedStringNullableFilter },
     _max: { type: NestedStringNullableFilter },
-    max: { type: NestedStringNullableFilter },
   }),
 })
 
@@ -1243,11 +1524,8 @@ export const DateTimeNullableWithAggregatesFilter = new GraphQLInputObjectType({
     gte: { type: GraphQLDateTime },
     not: { type: NestedDateTimeNullableWithAggregatesFilter },
     _count: { type: NestedIntNullableFilter },
-    count: { type: NestedIntNullableFilter },
     _min: { type: NestedDateTimeNullableFilter },
-    min: { type: NestedDateTimeNullableFilter },
     _max: { type: NestedDateTimeNullableFilter },
-    max: { type: NestedDateTimeNullableFilter },
   }),
 })
 
@@ -1258,6 +1536,16 @@ export const EnumAccountStatusFilter = new GraphQLInputObjectType({
     in: { type: new GraphQLList(new GraphQLNonNull(AccountStatus)) },
     notIn: { type: new GraphQLList(new GraphQLNonNull(AccountStatus)) },
     not: { type: NestedEnumAccountStatusFilter },
+  }),
+})
+
+export const EnumDayNullableFilter = new GraphQLInputObjectType({
+  name: 'EnumDayNullableFilter',
+  fields: () => ({
+    equals: { type: Day },
+    in: { type: new GraphQLList(Day) },
+    notIn: { type: new GraphQLList(Day) },
+    not: { type: NestedEnumDayNullableFilter },
   }),
 })
 
@@ -1278,6 +1566,99 @@ export const LogListRelationFilter = new GraphQLInputObjectType({
   }),
 })
 
+export const LogOrderByRelationAggregateInput = new GraphQLInputObjectType({
+  name: 'LogOrderByRelationAggregateInput',
+  fields: () => ({
+    _count: { type: SortOrder },
+  }),
+})
+
+export const AccountCountOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'AccountCountOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    ownerId: { type: SortOrder },
+    name: { type: SortOrder },
+    email: { type: SortOrder },
+    phone: { type: SortOrder },
+    username: { type: SortOrder },
+    password: { type: SortOrder },
+    pin: { type: SortOrder },
+    lastActivity: { type: SortOrder },
+    status: { type: SortOrder },
+    statusDuration: { type: SortOrder },
+    loginActivity: { type: SortOrder },
+    campaignStart: { type: SortOrder },
+    Notes: { type: SortOrder },
+    createdAt: { type: SortOrder },
+    updatedAt: { type: SortOrder },
+  }),
+})
+
+export const AccountAvgOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'AccountAvgOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    ownerId: { type: SortOrder },
+    pin: { type: SortOrder },
+    statusDuration: { type: SortOrder },
+  }),
+})
+
+export const AccountMaxOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'AccountMaxOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    ownerId: { type: SortOrder },
+    name: { type: SortOrder },
+    email: { type: SortOrder },
+    phone: { type: SortOrder },
+    username: { type: SortOrder },
+    password: { type: SortOrder },
+    pin: { type: SortOrder },
+    lastActivity: { type: SortOrder },
+    status: { type: SortOrder },
+    statusDuration: { type: SortOrder },
+    loginActivity: { type: SortOrder },
+    campaignStart: { type: SortOrder },
+    Notes: { type: SortOrder },
+    createdAt: { type: SortOrder },
+    updatedAt: { type: SortOrder },
+  }),
+})
+
+export const AccountMinOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'AccountMinOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    ownerId: { type: SortOrder },
+    name: { type: SortOrder },
+    email: { type: SortOrder },
+    phone: { type: SortOrder },
+    username: { type: SortOrder },
+    password: { type: SortOrder },
+    pin: { type: SortOrder },
+    lastActivity: { type: SortOrder },
+    status: { type: SortOrder },
+    statusDuration: { type: SortOrder },
+    loginActivity: { type: SortOrder },
+    campaignStart: { type: SortOrder },
+    Notes: { type: SortOrder },
+    createdAt: { type: SortOrder },
+    updatedAt: { type: SortOrder },
+  }),
+})
+
+export const AccountSumOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'AccountSumOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    ownerId: { type: SortOrder },
+    pin: { type: SortOrder },
+    statusDuration: { type: SortOrder },
+  }),
+})
+
 export const EnumAccountStatusWithAggregatesFilter = new GraphQLInputObjectType(
   {
     name: 'EnumAccountStatusWithAggregatesFilter',
@@ -1287,14 +1668,24 @@ export const EnumAccountStatusWithAggregatesFilter = new GraphQLInputObjectType(
       notIn: { type: new GraphQLList(new GraphQLNonNull(AccountStatus)) },
       not: { type: NestedEnumAccountStatusWithAggregatesFilter },
       _count: { type: NestedIntFilter },
-      count: { type: NestedIntFilter },
       _min: { type: NestedEnumAccountStatusFilter },
-      min: { type: NestedEnumAccountStatusFilter },
       _max: { type: NestedEnumAccountStatusFilter },
-      max: { type: NestedEnumAccountStatusFilter },
     }),
   },
 )
+
+export const EnumDayNullableWithAggregatesFilter = new GraphQLInputObjectType({
+  name: 'EnumDayNullableWithAggregatesFilter',
+  fields: () => ({
+    equals: { type: Day },
+    in: { type: new GraphQLList(Day) },
+    notIn: { type: new GraphQLList(Day) },
+    not: { type: NestedEnumDayNullableWithAggregatesFilter },
+    _count: { type: NestedIntNullableFilter },
+    _min: { type: NestedEnumDayNullableFilter },
+    _max: { type: NestedEnumDayNullableFilter },
+  }),
+})
 
 export const IntNullableFilter = new GraphQLInputObjectType({
   name: 'IntNullableFilter',
@@ -1328,6 +1719,58 @@ export const AccountRelationFilter = new GraphQLInputObjectType({
   }),
 })
 
+export const LogCountOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'LogCountOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    accountId: { type: SortOrder },
+    type: { type: SortOrder },
+    message: { type: SortOrder },
+    createdAt: { type: SortOrder },
+    updatedAt: { type: SortOrder },
+  }),
+})
+
+export const LogAvgOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'LogAvgOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    accountId: { type: SortOrder },
+  }),
+})
+
+export const LogMaxOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'LogMaxOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    accountId: { type: SortOrder },
+    type: { type: SortOrder },
+    message: { type: SortOrder },
+    createdAt: { type: SortOrder },
+    updatedAt: { type: SortOrder },
+  }),
+})
+
+export const LogMinOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'LogMinOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    accountId: { type: SortOrder },
+    type: { type: SortOrder },
+    message: { type: SortOrder },
+    createdAt: { type: SortOrder },
+    updatedAt: { type: SortOrder },
+  }),
+})
+
+export const LogSumOrderByAggregateInput = new GraphQLInputObjectType({
+  name: 'LogSumOrderByAggregateInput',
+  fields: () => ({
+    id: { type: SortOrder },
+    accountId: { type: SortOrder },
+  }),
+})
+
 export const IntNullableWithAggregatesFilter = new GraphQLInputObjectType({
   name: 'IntNullableWithAggregatesFilter',
   fields: () => ({
@@ -1340,15 +1783,10 @@ export const IntNullableWithAggregatesFilter = new GraphQLInputObjectType({
     gte: { type: GraphQLInt },
     not: { type: NestedIntNullableWithAggregatesFilter },
     _count: { type: NestedIntNullableFilter },
-    count: { type: NestedIntNullableFilter },
     _avg: { type: NestedFloatNullableFilter },
-    avg: { type: NestedFloatNullableFilter },
     _sum: { type: NestedIntNullableFilter },
-    sum: { type: NestedIntNullableFilter },
     _min: { type: NestedIntNullableFilter },
-    min: { type: NestedIntNullableFilter },
     _max: { type: NestedIntNullableFilter },
-    max: { type: NestedIntNullableFilter },
   }),
 })
 
@@ -1360,11 +1798,8 @@ export const EnumLogTypeWithAggregatesFilter = new GraphQLInputObjectType({
     notIn: { type: new GraphQLList(new GraphQLNonNull(LogType)) },
     not: { type: NestedEnumLogTypeWithAggregatesFilter },
     _count: { type: NestedIntFilter },
-    count: { type: NestedIntFilter },
     _min: { type: NestedEnumLogTypeFilter },
-    min: { type: NestedEnumLogTypeFilter },
     _max: { type: NestedEnumLogTypeFilter },
-    max: { type: NestedEnumLogTypeFilter },
   }),
 })
 
@@ -1651,6 +2086,14 @@ export const EnumAccountStatusFieldUpdateOperationsInput =
     }),
   })
 
+export const NullableEnumDayFieldUpdateOperationsInput =
+  new GraphQLInputObjectType({
+    name: 'NullableEnumDayFieldUpdateOperationsInput',
+    fields: () => ({
+      set: { type: Day },
+    }),
+  })
+
 export const UserUpdateOneRequiredWithoutAccountsInput =
   new GraphQLInputObjectType({
     name: 'UserUpdateOneRequiredWithoutAccountsInput',
@@ -1862,15 +2305,10 @@ export const NestedIntWithAggregatesFilter = new GraphQLInputObjectType({
     gte: { type: GraphQLInt },
     not: { type: NestedIntWithAggregatesFilter },
     _count: { type: NestedIntFilter },
-    count: { type: NestedIntFilter },
     _avg: { type: NestedFloatFilter },
-    avg: { type: NestedFloatFilter },
     _sum: { type: NestedIntFilter },
-    sum: { type: NestedIntFilter },
     _min: { type: NestedIntFilter },
-    min: { type: NestedIntFilter },
     _max: { type: NestedIntFilter },
-    max: { type: NestedIntFilter },
   }),
 })
 
@@ -1894,11 +2332,8 @@ export const NestedBoolWithAggregatesFilter = new GraphQLInputObjectType({
     equals: { type: GraphQLBoolean },
     not: { type: NestedBoolWithAggregatesFilter },
     _count: { type: NestedIntFilter },
-    count: { type: NestedIntFilter },
     _min: { type: NestedBoolFilter },
-    min: { type: NestedBoolFilter },
     _max: { type: NestedBoolFilter },
-    max: { type: NestedBoolFilter },
   }),
 })
 
@@ -1911,11 +2346,8 @@ export const NestedEnumUserRoleWithAggregatesFilter =
       notIn: { type: new GraphQLList(new GraphQLNonNull(UserRole)) },
       not: { type: NestedEnumUserRoleWithAggregatesFilter },
       _count: { type: NestedIntFilter },
-      count: { type: NestedIntFilter },
       _min: { type: NestedEnumUserRoleFilter },
-      min: { type: NestedEnumUserRoleFilter },
       _max: { type: NestedEnumUserRoleFilter },
-      max: { type: NestedEnumUserRoleFilter },
     }),
   })
 
@@ -1928,11 +2360,8 @@ export const NestedEnumPermissionTypeWithAggregatesFilter =
       notIn: { type: new GraphQLList(new GraphQLNonNull(PermissionType)) },
       not: { type: NestedEnumPermissionTypeWithAggregatesFilter },
       _count: { type: NestedIntFilter },
-      count: { type: NestedIntFilter },
       _min: { type: NestedEnumPermissionTypeFilter },
-      min: { type: NestedEnumPermissionTypeFilter },
       _max: { type: NestedEnumPermissionTypeFilter },
-      max: { type: NestedEnumPermissionTypeFilter },
     }),
   })
 
@@ -1951,11 +2380,8 @@ export const NestedStringWithAggregatesFilter = new GraphQLInputObjectType({
     endsWith: { type: GraphQLString },
     not: { type: NestedStringWithAggregatesFilter },
     _count: { type: NestedIntFilter },
-    count: { type: NestedIntFilter },
     _min: { type: NestedStringFilter },
-    min: { type: NestedStringFilter },
     _max: { type: NestedStringFilter },
-    max: { type: NestedStringFilter },
   }),
 })
 
@@ -1976,8 +2402,8 @@ export const NestedIntNullableFilter = new GraphQLInputObjectType({
 export const NestedJsonNullableFilter = new GraphQLInputObjectType({
   name: 'NestedJsonNullableFilter',
   fields: () => ({
-    equals: { type: GraphQLJSON },
-    not: { type: GraphQLJSON },
+    equals: { type: JsonNullValueFilter },
+    not: { type: JsonNullValueFilter },
   }),
 })
 
@@ -2007,11 +2433,8 @@ export const NestedDateTimeWithAggregatesFilter = new GraphQLInputObjectType({
     gte: { type: GraphQLDateTime },
     not: { type: NestedDateTimeWithAggregatesFilter },
     _count: { type: NestedIntFilter },
-    count: { type: NestedIntFilter },
     _min: { type: NestedDateTimeFilter },
-    min: { type: NestedDateTimeFilter },
     _max: { type: NestedDateTimeFilter },
-    max: { type: NestedDateTimeFilter },
   }),
 })
 
@@ -2062,11 +2485,8 @@ export const NestedStringNullableWithAggregatesFilter =
       endsWith: { type: GraphQLString },
       not: { type: NestedStringNullableWithAggregatesFilter },
       _count: { type: NestedIntNullableFilter },
-      count: { type: NestedIntNullableFilter },
       _min: { type: NestedStringNullableFilter },
-      min: { type: NestedStringNullableFilter },
       _max: { type: NestedStringNullableFilter },
-      max: { type: NestedStringNullableFilter },
     }),
   })
 
@@ -2083,11 +2503,8 @@ export const NestedDateTimeNullableWithAggregatesFilter =
       gte: { type: GraphQLDateTime },
       not: { type: NestedDateTimeNullableWithAggregatesFilter },
       _count: { type: NestedIntNullableFilter },
-      count: { type: NestedIntNullableFilter },
       _min: { type: NestedDateTimeNullableFilter },
-      min: { type: NestedDateTimeNullableFilter },
       _max: { type: NestedDateTimeNullableFilter },
-      max: { type: NestedDateTimeNullableFilter },
     }),
   })
 
@@ -2101,6 +2518,16 @@ export const NestedEnumAccountStatusFilter = new GraphQLInputObjectType({
   }),
 })
 
+export const NestedEnumDayNullableFilter = new GraphQLInputObjectType({
+  name: 'NestedEnumDayNullableFilter',
+  fields: () => ({
+    equals: { type: Day },
+    in: { type: new GraphQLList(Day) },
+    notIn: { type: new GraphQLList(Day) },
+    not: { type: NestedEnumDayNullableFilter },
+  }),
+})
+
 export const NestedEnumAccountStatusWithAggregatesFilter =
   new GraphQLInputObjectType({
     name: 'NestedEnumAccountStatusWithAggregatesFilter',
@@ -2110,11 +2537,22 @@ export const NestedEnumAccountStatusWithAggregatesFilter =
       notIn: { type: new GraphQLList(new GraphQLNonNull(AccountStatus)) },
       not: { type: NestedEnumAccountStatusWithAggregatesFilter },
       _count: { type: NestedIntFilter },
-      count: { type: NestedIntFilter },
       _min: { type: NestedEnumAccountStatusFilter },
-      min: { type: NestedEnumAccountStatusFilter },
       _max: { type: NestedEnumAccountStatusFilter },
-      max: { type: NestedEnumAccountStatusFilter },
+    }),
+  })
+
+export const NestedEnumDayNullableWithAggregatesFilter =
+  new GraphQLInputObjectType({
+    name: 'NestedEnumDayNullableWithAggregatesFilter',
+    fields: () => ({
+      equals: { type: Day },
+      in: { type: new GraphQLList(Day) },
+      notIn: { type: new GraphQLList(Day) },
+      not: { type: NestedEnumDayNullableWithAggregatesFilter },
+      _count: { type: NestedIntNullableFilter },
+      _min: { type: NestedEnumDayNullableFilter },
+      _max: { type: NestedEnumDayNullableFilter },
     }),
   })
 
@@ -2141,15 +2579,10 @@ export const NestedIntNullableWithAggregatesFilter = new GraphQLInputObjectType(
       gte: { type: GraphQLInt },
       not: { type: NestedIntNullableWithAggregatesFilter },
       _count: { type: NestedIntNullableFilter },
-      count: { type: NestedIntNullableFilter },
       _avg: { type: NestedFloatNullableFilter },
-      avg: { type: NestedFloatNullableFilter },
       _sum: { type: NestedIntNullableFilter },
-      sum: { type: NestedIntNullableFilter },
       _min: { type: NestedIntNullableFilter },
-      min: { type: NestedIntNullableFilter },
       _max: { type: NestedIntNullableFilter },
-      max: { type: NestedIntNullableFilter },
     }),
   },
 )
@@ -2177,11 +2610,8 @@ export const NestedEnumLogTypeWithAggregatesFilter = new GraphQLInputObjectType(
       notIn: { type: new GraphQLList(new GraphQLNonNull(LogType)) },
       not: { type: NestedEnumLogTypeWithAggregatesFilter },
       _count: { type: NestedIntFilter },
-      count: { type: NestedIntFilter },
       _min: { type: NestedEnumLogTypeFilter },
-      min: { type: NestedEnumLogTypeFilter },
       _max: { type: NestedEnumLogTypeFilter },
-      max: { type: NestedEnumLogTypeFilter },
     }),
   },
 )
@@ -2199,6 +2629,8 @@ export const AccountCreateWithoutOwnerInput = new GraphQLInputObjectType({
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
     loginActivity: { type: AccountStatus },
+    campaignStart: { type: Day },
+    Notes: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     logs: { type: LogCreateNestedManyWithoutAccountInput },
@@ -2220,6 +2652,8 @@ export const AccountUncheckedCreateWithoutOwnerInput =
       status: { type: AccountStatus },
       statusDuration: { type: GraphQLInt },
       loginActivity: { type: AccountStatus },
+      campaignStart: { type: Day },
+      Notes: { type: GraphQLString },
       createdAt: { type: GraphQLDateTime },
       updatedAt: { type: GraphQLDateTime },
       logs: { type: LogUncheckedCreateNestedManyWithoutAccountInput },
@@ -2305,6 +2739,8 @@ export const AccountScalarWhereInput = new GraphQLInputObjectType({
     status: { type: EnumAccountStatusFilter },
     statusDuration: { type: IntFilter },
     loginActivity: { type: EnumAccountStatusFilter },
+    campaignStart: { type: EnumDayNullableFilter },
+    Notes: { type: StringNullableFilter },
     createdAt: { type: DateTimeFilter },
     updatedAt: { type: DateTimeFilter },
   }),
@@ -2510,6 +2946,8 @@ export const AccountCreateWithoutLogsInput = new GraphQLInputObjectType({
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
     loginActivity: { type: AccountStatus },
+    campaignStart: { type: Day },
+    Notes: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     owner: {
@@ -2534,6 +2972,8 @@ export const AccountUncheckedCreateWithoutLogsInput =
       status: { type: AccountStatus },
       statusDuration: { type: GraphQLInt },
       loginActivity: { type: AccountStatus },
+      campaignStart: { type: Day },
+      Notes: { type: GraphQLString },
       createdAt: { type: GraphQLDateTime },
       updatedAt: { type: GraphQLDateTime },
     }),
@@ -2575,6 +3015,8 @@ export const AccountUpdateWithoutLogsInput = new GraphQLInputObjectType({
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
     loginActivity: { type: AccountStatus },
+    campaignStart: { type: Day },
+    Notes: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     owner: { type: UserUpdateOneRequiredWithoutAccountsInput },
@@ -2597,6 +3039,8 @@ export const AccountUncheckedUpdateWithoutLogsInput =
       status: { type: AccountStatus },
       statusDuration: { type: GraphQLInt },
       loginActivity: { type: AccountStatus },
+      campaignStart: { type: Day },
+      Notes: { type: GraphQLString },
       createdAt: { type: GraphQLDateTime },
       updatedAt: { type: GraphQLDateTime },
     }),
@@ -2616,6 +3060,8 @@ export const AccountCreateManyOwnerInput = new GraphQLInputObjectType({
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
     loginActivity: { type: AccountStatus },
+    campaignStart: { type: Day },
+    Notes: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
   }),
@@ -2634,6 +3080,8 @@ export const AccountUpdateWithoutOwnerInput = new GraphQLInputObjectType({
     status: { type: AccountStatus },
     statusDuration: { type: GraphQLInt },
     loginActivity: { type: AccountStatus },
+    campaignStart: { type: Day },
+    Notes: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime },
     logs: { type: LogUpdateManyWithoutAccountInput },
@@ -2655,6 +3103,8 @@ export const AccountUncheckedUpdateWithoutOwnerInput =
       status: { type: AccountStatus },
       statusDuration: { type: GraphQLInt },
       loginActivity: { type: AccountStatus },
+      campaignStart: { type: Day },
+      Notes: { type: GraphQLString },
       createdAt: { type: GraphQLDateTime },
       updatedAt: { type: GraphQLDateTime },
       logs: { type: LogUncheckedUpdateManyWithoutAccountInput },
@@ -2676,6 +3126,8 @@ export const AccountUncheckedUpdateManyWithoutAccountsInput =
       status: { type: AccountStatus },
       statusDuration: { type: GraphQLInt },
       loginActivity: { type: AccountStatus },
+      campaignStart: { type: Day },
+      Notes: { type: GraphQLString },
       createdAt: { type: GraphQLDateTime },
       updatedAt: { type: GraphQLDateTime },
     }),
