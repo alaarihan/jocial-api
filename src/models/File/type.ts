@@ -48,15 +48,10 @@ export const AggregateFile = new GraphQLObjectType({
   name: 'AggregateFile',
   fields: () => ({
     _count: { type: FileCountAggregateOutputType },
-    count: { type: FileCountAggregateOutputType },
     _avg: { type: FileAvgAggregateOutputType },
-    avg: { type: FileAvgAggregateOutputType },
     _sum: { type: FileSumAggregateOutputType },
-    sum: { type: FileSumAggregateOutputType },
     _min: { type: FileMinAggregateOutputType },
-    min: { type: FileMinAggregateOutputType },
     _max: { type: FileMaxAggregateOutputType },
-    max: { type: FileMaxAggregateOutputType },
   }),
 })
 

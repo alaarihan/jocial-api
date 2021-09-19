@@ -42,15 +42,10 @@ export const AggregateLog = new GraphQLObjectType({
   name: 'AggregateLog',
   fields: () => ({
     _count: { type: LogCountAggregateOutputType },
-    count: { type: LogCountAggregateOutputType },
     _avg: { type: LogAvgAggregateOutputType },
-    avg: { type: LogAvgAggregateOutputType },
     _sum: { type: LogSumAggregateOutputType },
-    sum: { type: LogSumAggregateOutputType },
     _min: { type: LogMinAggregateOutputType },
-    min: { type: LogMinAggregateOutputType },
     _max: { type: LogMaxAggregateOutputType },
-    max: { type: LogMaxAggregateOutputType },
   }),
 })
 

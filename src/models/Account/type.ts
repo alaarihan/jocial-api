@@ -10,7 +10,11 @@ import {
 import { GraphQLDateTime, GraphQLJSON } from 'graphql-scalars'
 import { User, Log } from '../types'
 import { AccountStatus, Day, LogScalarFieldEnum } from '../enums'
-import { LogOrderByInput, LogWhereInput, LogWhereUniqueInput } from '../inputs'
+import {
+  LogOrderByWithRelationInput,
+  LogWhereInput,
+  LogWhereUniqueInput,
+} from '../inputs'
 
 export const Account = new GraphQLObjectType({
   name: 'Account',

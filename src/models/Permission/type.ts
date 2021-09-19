@@ -38,15 +38,10 @@ export const AggregatePermission = new GraphQLObjectType({
   name: 'AggregatePermission',
   fields: () => ({
     _count: { type: PermissionCountAggregateOutputType },
-    count: { type: PermissionCountAggregateOutputType },
     _avg: { type: PermissionAvgAggregateOutputType },
-    avg: { type: PermissionAvgAggregateOutputType },
     _sum: { type: PermissionSumAggregateOutputType },
-    sum: { type: PermissionSumAggregateOutputType },
     _min: { type: PermissionMinAggregateOutputType },
-    min: { type: PermissionMinAggregateOutputType },
     _max: { type: PermissionMaxAggregateOutputType },
-    max: { type: PermissionMaxAggregateOutputType },
   }),
 })
 

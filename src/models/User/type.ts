@@ -11,7 +11,7 @@ import { GraphQLDateTime, GraphQLJSON } from 'graphql-scalars'
 import { Account } from '../types'
 import { UserRole, AccountScalarFieldEnum } from '../enums'
 import {
-  AccountOrderByInput,
+  AccountOrderByWithRelationInput,
   AccountWhereInput,
   AccountWhereUniqueInput,
 } from '../inputs'
@@ -56,7 +56,7 @@ export const User = new GraphQLObjectType({
       type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(Account))),
       args: {
         where: { type: AccountWhereInput },
-        orderBy: { type: AccountOrderByInput },
+        orderBy: { type: AccountOrderByWithRelationInput },
         cursor: { type: AccountWhereUniqueInput },
         take: { type: GraphQLInt },
         skip: { type: GraphQLInt },
@@ -72,15 +72,10 @@ export const AggregateUser = new GraphQLObjectType({
   name: 'AggregateUser',
   fields: () => ({
     _count: { type: UserCountAggregateOutputType },
-    count: { type: UserCountAggregateOutputType },
     _avg: { type: UserAvgAggregateOutputType },
-    avg: { type: UserAvgAggregateOutputType },
     _sum: { type: UserSumAggregateOutputType },
-    sum: { type: UserSumAggregateOutputType },
     _min: { type: UserMinAggregateOutputType },
-    min: { type: UserMinAggregateOutputType },
     _max: { type: UserMaxAggregateOutputType },
-    max: { type: UserMaxAggregateOutputType },
   }),
 })
 
@@ -103,6 +98,13 @@ export const UserGroupByOutputType = new GraphQLObjectType({
     _sum: { type: UserSumAggregateOutputType },
     _min: { type: UserMinAggregateOutputType },
     _max: { type: UserMaxAggregateOutputType },
+  }),
+})
+
+export const UserCountOutputType = new GraphQLObjectType({
+  name: 'UserCountOutputType',
+  fields: () => ({
+    accounts: { type: GraphQLInt },
   }),
 })
 
