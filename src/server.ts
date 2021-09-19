@@ -30,7 +30,7 @@ async function start() {
   app.register(mercurius, {
     schema: schemaWithMiddlewares,
     context: createContext,
-    graphiql: process.env.INTROSPECTIONS==='on',
+    graphiql: process.env.INTROSPECTIONS === 'on',
     subscription: {
       context: (_, req) => {
         return createContext(req)
