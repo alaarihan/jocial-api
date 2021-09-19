@@ -3,7 +3,7 @@ import { Permission, AggregatePermission } from './type'
 import {
   PermissionWhereUniqueInput,
   PermissionWhereInput,
-  PermissionOrderByInput,
+  PermissionOrderByWithRelationInput,
 } from '../inputs'
 import { PermissionScalarFieldEnum } from '../enums'
 import { AppContext } from '../../context'
@@ -31,7 +31,7 @@ export const permissionQueries = {
     type: Permission,
     args: {
       where: { type: PermissionWhereInput },
-      orderBy: { type: new GraphQLList(PermissionOrderByInput) },
+      orderBy: { type: new GraphQLList(PermissionOrderByWithRelationInput) },
       cursor: { type: PermissionWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
@@ -50,7 +50,7 @@ export const permissionQueries = {
     type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(Permission))),
     args: {
       where: { type: PermissionWhereInput },
-      orderBy: { type: new GraphQLList(PermissionOrderByInput) },
+      orderBy: { type: new GraphQLList(PermissionOrderByWithRelationInput) },
       cursor: { type: PermissionWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
@@ -69,7 +69,7 @@ export const permissionQueries = {
     type: new GraphQLNonNull(GraphQLInt),
     args: {
       where: { type: PermissionWhereInput },
-      orderBy: { type: new GraphQLList(PermissionOrderByInput) },
+      orderBy: { type: new GraphQLList(PermissionOrderByWithRelationInput) },
       cursor: { type: PermissionWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
@@ -88,7 +88,7 @@ export const permissionQueries = {
     type: new GraphQLNonNull(AggregatePermission),
     args: {
       where: { type: PermissionWhereInput },
-      orderBy: { type: new GraphQLList(PermissionOrderByInput) },
+      orderBy: { type: new GraphQLList(PermissionOrderByWithRelationInput) },
       cursor: { type: PermissionWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },

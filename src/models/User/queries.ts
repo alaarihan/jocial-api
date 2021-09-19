@@ -3,7 +3,7 @@ import { User, AggregateUser } from './type'
 import {
   UserWhereUniqueInput,
   UserWhereInput,
-  UserOrderByInput,
+  UserOrderByWithRelationInput,
 } from '../inputs'
 import { UserScalarFieldEnum } from '../enums'
 import { AppContext } from '../../context'
@@ -31,7 +31,7 @@ export const userQueries = {
     type: User,
     args: {
       where: { type: UserWhereInput },
-      orderBy: { type: new GraphQLList(UserOrderByInput) },
+      orderBy: { type: new GraphQLList(UserOrderByWithRelationInput) },
       cursor: { type: UserWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
@@ -50,7 +50,7 @@ export const userQueries = {
     type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(User))),
     args: {
       where: { type: UserWhereInput },
-      orderBy: { type: new GraphQLList(UserOrderByInput) },
+      orderBy: { type: new GraphQLList(UserOrderByWithRelationInput) },
       cursor: { type: UserWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
@@ -69,7 +69,7 @@ export const userQueries = {
     type: new GraphQLNonNull(GraphQLInt),
     args: {
       where: { type: UserWhereInput },
-      orderBy: { type: new GraphQLList(UserOrderByInput) },
+      orderBy: { type: new GraphQLList(UserOrderByWithRelationInput) },
       cursor: { type: UserWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
@@ -88,7 +88,7 @@ export const userQueries = {
     type: new GraphQLNonNull(AggregateUser),
     args: {
       where: { type: UserWhereInput },
-      orderBy: { type: new GraphQLList(UserOrderByInput) },
+      orderBy: { type: new GraphQLList(UserOrderByWithRelationInput) },
       cursor: { type: UserWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },

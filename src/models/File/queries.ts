@@ -3,7 +3,7 @@ import { File, AggregateFile } from './type'
 import {
   FileWhereUniqueInput,
   FileWhereInput,
-  FileOrderByInput,
+  FileOrderByWithRelationInput,
 } from '../inputs'
 import { FileScalarFieldEnum } from '../enums'
 import { AppContext } from '../../context'
@@ -31,7 +31,7 @@ export const fileQueries = {
     type: File,
     args: {
       where: { type: FileWhereInput },
-      orderBy: { type: new GraphQLList(FileOrderByInput) },
+      orderBy: { type: new GraphQLList(FileOrderByWithRelationInput) },
       cursor: { type: FileWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
@@ -50,7 +50,7 @@ export const fileQueries = {
     type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(File))),
     args: {
       where: { type: FileWhereInput },
-      orderBy: { type: new GraphQLList(FileOrderByInput) },
+      orderBy: { type: new GraphQLList(FileOrderByWithRelationInput) },
       cursor: { type: FileWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
@@ -69,7 +69,7 @@ export const fileQueries = {
     type: new GraphQLNonNull(GraphQLInt),
     args: {
       where: { type: FileWhereInput },
-      orderBy: { type: new GraphQLList(FileOrderByInput) },
+      orderBy: { type: new GraphQLList(FileOrderByWithRelationInput) },
       cursor: { type: FileWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
@@ -88,7 +88,7 @@ export const fileQueries = {
     type: new GraphQLNonNull(AggregateFile),
     args: {
       where: { type: FileWhereInput },
-      orderBy: { type: new GraphQLList(FileOrderByInput) },
+      orderBy: { type: new GraphQLList(FileOrderByWithRelationInput) },
       cursor: { type: FileWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },

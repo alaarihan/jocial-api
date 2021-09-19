@@ -1,6 +1,10 @@
 import { GraphQLInt, GraphQLList, GraphQLNonNull } from 'graphql'
 import { Log, AggregateLog } from './type'
-import { LogWhereUniqueInput, LogWhereInput, LogOrderByInput } from '../inputs'
+import {
+  LogWhereUniqueInput,
+  LogWhereInput,
+  LogOrderByWithRelationInput,
+} from '../inputs'
 import { LogScalarFieldEnum } from '../enums'
 import { AppContext } from '../../context'
 export const logQueries = {
@@ -27,7 +31,7 @@ export const logQueries = {
     type: Log,
     args: {
       where: { type: LogWhereInput },
-      orderBy: { type: new GraphQLList(LogOrderByInput) },
+      orderBy: { type: new GraphQLList(LogOrderByWithRelationInput) },
       cursor: { type: LogWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
@@ -46,7 +50,7 @@ export const logQueries = {
     type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(Log))),
     args: {
       where: { type: LogWhereInput },
-      orderBy: { type: new GraphQLList(LogOrderByInput) },
+      orderBy: { type: new GraphQLList(LogOrderByWithRelationInput) },
       cursor: { type: LogWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
@@ -65,7 +69,7 @@ export const logQueries = {
     type: new GraphQLNonNull(GraphQLInt),
     args: {
       where: { type: LogWhereInput },
-      orderBy: { type: new GraphQLList(LogOrderByInput) },
+      orderBy: { type: new GraphQLList(LogOrderByWithRelationInput) },
       cursor: { type: LogWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
@@ -84,7 +88,7 @@ export const logQueries = {
     type: new GraphQLNonNull(AggregateLog),
     args: {
       where: { type: LogWhereInput },
-      orderBy: { type: new GraphQLList(LogOrderByInput) },
+      orderBy: { type: new GraphQLList(LogOrderByWithRelationInput) },
       cursor: { type: LogWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },

@@ -3,7 +3,7 @@ import { Account, AggregateAccount } from './type'
 import {
   AccountWhereUniqueInput,
   AccountWhereInput,
-  AccountOrderByInput,
+  AccountOrderByWithRelationInput,
 } from '../inputs'
 import { AccountScalarFieldEnum } from '../enums'
 import { AppContext } from '../../context'
@@ -31,7 +31,7 @@ export const accountQueries = {
     type: Account,
     args: {
       where: { type: AccountWhereInput },
-      orderBy: { type: new GraphQLList(AccountOrderByInput) },
+      orderBy: { type: new GraphQLList(AccountOrderByWithRelationInput) },
       cursor: { type: AccountWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
@@ -50,7 +50,7 @@ export const accountQueries = {
     type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(Account))),
     args: {
       where: { type: AccountWhereInput },
-      orderBy: { type: new GraphQLList(AccountOrderByInput) },
+      orderBy: { type: new GraphQLList(AccountOrderByWithRelationInput) },
       cursor: { type: AccountWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
@@ -69,7 +69,7 @@ export const accountQueries = {
     type: new GraphQLNonNull(GraphQLInt),
     args: {
       where: { type: AccountWhereInput },
-      orderBy: { type: new GraphQLList(AccountOrderByInput) },
+      orderBy: { type: new GraphQLList(AccountOrderByWithRelationInput) },
       cursor: { type: AccountWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
@@ -88,7 +88,7 @@ export const accountQueries = {
     type: new GraphQLNonNull(AggregateAccount),
     args: {
       where: { type: AccountWhereInput },
-      orderBy: { type: new GraphQLList(AccountOrderByInput) },
+      orderBy: { type: new GraphQLList(AccountOrderByWithRelationInput) },
       cursor: { type: AccountWhereUniqueInput },
       skip: { type: GraphQLInt },
       take: { type: GraphQLInt },
